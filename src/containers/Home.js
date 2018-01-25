@@ -1,4 +1,5 @@
 import React from "react";
+import InputsController from "./InputsController";
 
 // Home page component
 export default class Home extends React.Component {
@@ -6,7 +7,8 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="page-home">
-        <h4>Hello world!</h4>
+        <h4>Asset Breakdown</h4>
+        <InputsController></InputsController>
       </div>
     );
   }
