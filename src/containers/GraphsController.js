@@ -1,26 +1,29 @@
 import { connect } from 'react-redux';
-import { goDeeper, goShallower } from '../actions';
-import { buttons } from "../data/testData1.js";
-import Inputs from "../components/Inputs.js";
+import { goDeeper, goShallower, focusSector } from '../actions';
+import data from "../data/testData2.js";
+import Graphs from "../components/Graphs.js";
 
-const getDataLevelView = (dataLevel) => {
-  return buttons[dataLevel];
+const getDataLevelData = (dataLevel) => {
+  //console.log("GETTING DATA: ",data); //TODO: use dataLevel to get different datas
+  return data;
 };
 
 const mapStateToProps = state => {
   return {
-    dataLevelView: getDataLevelView(state.dataLevel.level)
+    dataSet: getDataLevelData(state.dataLevel.level),
+    focusId: state.dataFocus
   };
 };
 
 const mapDispatchToProps = {
     onDataViewClick: goDeeper,
-    onDataViewContext: goShallower
+    onDataViewContext: goShallower,
+    onFocus: focusSector
 };
 
-const InputsController = connect(
+const GraphsController = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Inputs);
+)(Graphs);
 
-export default InputsController;
+export default GraphsController;

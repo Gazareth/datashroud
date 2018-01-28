@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { routerReducer } from "react-router-redux";
 import { reducer as formReducer } from "redux-form";
-import dataLevel from "./dataLevel";
+import {dataLevel, dataFocus} from "./dataLevel";
 
 // main reducers
 export const reducers = combineReducers({
@@ -9,4 +9,5 @@ export const reducers = combineReducers({
   form: formReducer,
   // your reducer here
   dataLevel,
+  dataFocus
 });
