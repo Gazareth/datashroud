@@ -12,6 +12,6 @@ export const goShallower = function(e) {
 };
 
 export const focusSector = function(i) {
-  console.log("FOCUSING: ",i);
+  //console.log("FOCUSING: ",i);
   return ({type: "FOCUS_INDEX", payload: i});
 };

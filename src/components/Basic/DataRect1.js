@@ -7,7 +7,7 @@ const md = 350;//maximum delay
 
 const DataRect1 = React.createClass({
   render() {
-   const {isFocus,noFocus,x,y,width,height,colors,index,root} = this.props;
+   const {isFocus,noFocus,x,y,width,height,colors,getColor,index,root} = this.props;
     
     const ad = Math.round(+(Math.random()*md)); //actual delay
     
@@ -16,9 +16,11 @@ const DataRect1 = React.createClass({
     
     const sv = {s: 0.5, e: 1.0};  //scale values
     
-    const fc = isFocus ? colors[Math.floor(index / root.children.length * 6)] : '#666'; //fill color
-    const sw = isFocus ? 3.5 : 2; //stroke width
-    const so = isFocus ? .85 : 0.45
+    //const color = colors[Math.floor(index / root.children.length * 6)];
+    const color = getColor(index);
+    const fc = isFocus ? color : '#666'; //fill color
+    const sw = isFocus ? 3.5 : 1.5; //stroke width
+    const sf = isFocus ? '#fff' : '#999';//stroke fill
     
     return(
         <Animate
@@ -29,7 +31,7 @@ const DataRect1 = React.createClass({
               opacity: 0.01,
               fill: fc,
               strokeWidth: sw,
-              strokeOpacity: so,
+              strokeFill: sf,
               scale: sv.s,
             }
           }
@@ -56,12 +58,12 @@ const DataRect1 = React.createClass({
             {
               fill: [fc],
               strokeWidth: [sw],
-              strokeOpacity: [so],
-              timing: {...st,duration: noFocus ? td*6 : td*3,delay: noFocus ? td : 0},
+              strokeFill: [sf],
+              timing: {...st,duration: noFocus ? (td)*6 : (td)*3,delay: noFocus ? td+ad : 0},
             },
           ]}
         >
-          {({ scale, opacity, fill, strokeWidth, strokeOpacity }) => {
+          {({ scale, opacity, fill, strokeWidth, strokeFill }) => {
             return (
               <rect
                 key={parseInt("1"+(index.toString()))}
@@ -71,9 +73,8 @@ const DataRect1 = React.createClass({
                 height={height}
                 style={{
                   fill,
-                  stroke: '#fff',
+                  stroke: strokeFill,
                   strokeWidth,
-                  strokeOpacity,
                   transformOrigin: "center",
                   opacity,
                   transform: `scale(${scale})`,

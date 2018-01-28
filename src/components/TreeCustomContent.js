@@ -5,7 +5,7 @@ import DataRect2 from "./Basic/DataRect2.js";
 
 const TreeContent = React.createClass({
   render() {
-    const { onDataViewClick, onDataViewContext, onFocus, focusId, colors,
+    const { onDataViewClick, onDataViewContext, onFocus, focusId, colors, getColor,
            root, depth, x, y, width, height, index, payload, rank, name } = this.props;
     //depth == 2 ? console.log("NAME: ",name,index,root) : null;
     
@@ -17,14 +17,15 @@ const TreeContent = React.createClass({
         {
           depth === 1 ?
           <DataRect1
-              isFocus={focusId === index || focusId === -1 }
-              noFocus={focusId === -1}
+              isFocus={focusId.now === index || focusId.now === -1 }
+              noFocus={focusId.now === -1}
               {...this.props}
             />
           : (root != undefined && depth === 2) ?
           <DataRect2
-              haveFocus={focusId === root.index}
-              noFocus={focusId === -1}
+              haveFocus={focusId.now === root.index}
+              wasFocus={focusId.prev === root.index}
+              noFocus={focusId.now === -1}
               {...this.props}
             />
           : null
@@ -53,7 +54,7 @@ const TreeContent = React.createClass({
             fillOpacity={0.9}
             style={{pointerEvents: 'none',userSelect: 'none'}}
           >
-            {index + 1}
+            { '' }
           </text>
           : null
         }

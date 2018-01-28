@@ -13,6 +13,6 @@ export const dataLevel = (state = {level: 0, maxLevel: 2}, action) => {
   }
 };
 
-export const dataFocus = (state = -1, action) => {
-  return (action.type == "FOCUS_INDEX" ? state + action.payload : state);
+export const dataFocus = (state = {now: -1, prev: -1}, action) => {
+  return (action.type == "FOCUS_INDEX" ? {...state, prev: state.now, now: state.now + action.payload} : state);
 };
