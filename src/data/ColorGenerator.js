@@ -1,7 +1,7 @@
 //var HUE_MASTERLIST = [0,45,90,135,180,225,270,315,360];
 var HUE_MASTERLIST = [,175,42,270,90,205,0]; //150 is a nice green
 
-var generateHue = () => (HUE_MASTERLIST.length > 0) ? HUE_MASTERLIST.pop() : 0;
+var generateHue = () => (HUE_MASTERLIST.length > 0) ? HUE_MASTERLIST.pop() : Math.round( Math.random()*360 );
 
 const MakeColor = ()=> [generateHue(),'50%','50%'];
 //['#FF0000','#FFA500','#F8C12D','#8DC77B','#6B8E23','#2E8B57','#1E90FF','#8889DD','#483D8B'];

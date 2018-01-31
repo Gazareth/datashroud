@@ -2,77 +2,49 @@ import React from "react";
 import Animate from "react-move/Animate";
 import { easeLinear, easeExpOut, easeExpIn, easeCircleOut, easeCircleIn, easeSinIn, easeSinOut  } from "d3-ease";
 
-const td = 350;//transition duration
+const t_ = 175;//transition time
 const md = 350;//maximum delay
+const ad = Math.round(+(Math.random()*md)); //actual delay
 
 const DataRect2 = React.createClass({
 render() {
    const {haveFocus, wasFocus, noFocus, x,y,width,height,index,root} = this.props;
     
-    const ad = Math.round(+(Math.random()*md)); //actual delay
-    
-    const st = { duration: td*2, delay: ad, ease: easeExpOut };//scale timing
-    const ot = { duration: td, delay: ad, ease: easeLinear };//opacity timing
-    
-    //const swav = haveFocus && !noFocus ? Math.pow(root.width*root.height, 1/14.5) : 0.5; //stroke width actual values
-    const swav = Math.pow(root.width*root.height, 1/14.5);
-    const swv = {s: swav, e: swav};  //stroke width values //was 0.5, 2.25
-  
-    const sf = '#c8c8c8'; //stroke fill
-    //if( !haveFocus ){ console.log(root.index," WASFOCUS?: ",wasFocus);}
-    //if(haveFocus) { console.log(root);}
-    const fx = (x-(root.x) !== 0); //flip x
-    const fy = (y-(root.y) !== 0); //flip y
+    const f_ = (haveFocus || wasFocus); //has been focused recently?
+    const f__ = haveFocus || (wasFocus && noFocus); //I am focused or no one is focused but I was the last to be
+
+    const sw = Math.pow(root.width*root.height, 1/14.5);  //stroke width
+    const sdo = 2*(width+height); //stroke dash offset = perimeter * 2
   
     const edgeCase = (x-(root.x) === 0) ||  (y-(root.y) === 0) || (x+width === (root.x + root.width)) || (y+height === (root.y + root.height));
   
-    //if( haveFocus && !edgeCase ){ console.log("NOT ONE!",index,x-root.x,y-root.y,(root.width + root.x) - (x + width), (root.height + root.y) - (y + height));}
-    
-    //if( (x-(root.x)) == 0 ){console.log("FLIPPING: ");}
+    const fx = edgeCase && (x-(root.x) !== 0); //should flip x
+    const fy = edgeCase && (y-(root.y) !== 0); //should flip y
+
+    //const sdot = {duration: f_ ? t_*12 : 0, delay: (edgeCase ? ad+(t_*2) : ad+(t_*3)), ease: easeExpOut}; //stroke dash offset timing (DELAY)
+    //const sdot = {duration: f_ ? t_*12 : 0, delay: (edgeCase ? ad : ad+t_), ease: easeExpOut}; //stroke dash offset timing
+    const sdot = {duration: f_ ? t_*12 : 0, delay: (edgeCase ? ad+(t_*0.5) : ad+(t_)), ease: easeExpOut}; //stroke dash offset timing 
+    const en_up = [{SDO: [0],timing: sdot,},];
+
     return(
         <Animate
           show={haveFocus}
 
           start={
             {
-              strokeFill: '#c8c8c8',
-              SDO: 2*(width+height),
+              SDO: sdo,
             }
           }
-          enter={[
-            {
-              strokeFill: [sf],
-              timing: st,
-            },
-            {
-              SDO: [0],
-              //timing: {duration: td*4+(ad*4),delay: 0, ease: easeExpOut},
-              timing: {duration: td*1.5,delay: (edgeCase ? 0 : td*0.75), ease: easeSinOut},
-            },
-          ]}
-          update={[
-            {
-              strokeFill: [sf],
-              timing: st,
-            },
-            {
-              SDO: [0],
-              //timing: {duration: td*4+(ad*4),delay: 0, ease: easeExpOut},
-              timing: {duration: (haveFocus || wasFocus) ? td*1.5 : 0,delay: (edgeCase ? 0 : td*0.75), ease: easeSinOut},
-            },
-          ]}
+          enter={en_up}
+          update={en_up}
           leave={[
             {
-              strokeFill: [sf],
-              timing: {...st,duration: noFocus ? td*6 : td*3, delay: noFocus ? td : 0},
-            },
-            {
               SDO: [2*(width+height)],
-              timing: {duration: (edgeCase ? td+(ad) : td),delay: (edgeCase ? (td*0.75)+(ad) : td), ease: easeSinIn},
+              timing: {duration: (edgeCase ? t_*2+(ad) : t_*2),delay: true ? 0 : (edgeCase ? (t_*3)+(ad) : t_*2), ease: easeLinear},
             },
           ]}
         >
-          {({ strokeFill, SDO }) => {
+          {({ SDO }) => {
             return (
               <rect
                 key={parseInt("2"+(index.toString()))}
@@ -84,8 +56,8 @@ render() {
                 style={{
                   pointerEvents: 'none',
                   fill: 'none',
-                  stroke: (haveFocus || wasFocus) ? '#fff' : strokeFill,
-                  strokeWidth: (haveFocus || wasFocus) ? swav : 0.2*swav,
+                  stroke: '#fff',
+                  strokeWidth: sw,
                   strokeDasharray: 2*(width+height),
                   strokeDashoffset: SDO,
                   transformOrigin: "center",

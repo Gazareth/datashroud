@@ -9,10 +9,19 @@ const TreeContent = React.createClass({
            root, depth, x, y, width, height, index, payload, rank, name } = this.props;
     //depth == 2 ? console.log("NAME: ",name,index,root) : null;
     
+    const setFocus = function(){
+      if( this.node !== undefined ){
+        //console.log(this.node.parentElement.parentElement);
+        this.node.parentElement.parentElement.parentElement.append(this.node.parentElement.parentElement); 
+      }
+      onFocus((index+1));
+    };
+
     return (
       <g
-        onMouseOver={depth === 1 ? ()=> onFocus((index+1)) : null}
+        onMouseOver={depth === 1 ? setFocus.bind(this) : null}
         onMouseLeave={depth === 1 ? ()=> onFocus(-(index+1)) : null}
+        ref={(n)=>this.node = n}
         >
         {
           depth === 1 ?
@@ -21,7 +30,7 @@ const TreeContent = React.createClass({
               noFocus={focusId.now === -1}
               {...this.props}
             />
-          : (root != undefined && depth === 2) ?
+          : (root != undefined && depth === 2 && (focusId.now === root.index) || (focusId.prev === root.index && focusId.now === -1)) ?
           <DataRect2
               haveFocus={focusId.now === root.index}
               wasFocus={focusId.prev === root.index}
