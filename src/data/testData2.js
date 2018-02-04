@@ -1,4 +1,4 @@
-var data = [
+const rawdata = [
           {
             name: 'andy',
             children: [
@@ -117,5 +117,7 @@ var data = [
               { name: 'VisualizationEvent', time: 2127 },
             ],
           }];
+
+const data = { group: "name", dataKey: "time", sizeKey: "time", data: rawdata};
 
 export default data;
