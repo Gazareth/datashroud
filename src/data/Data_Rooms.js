@@ -1,0 +1,26 @@
+const rooms = [
+  "Reception",
+  "Lobby",
+  "Kitchen",
+  "Customer Services",
+  "Project Management",
+  "Purchasing",
+  "Marketing",
+  "Production",
+  "Accounting and Finance",
+  "R & D",
+  "IT Dev 1",
+  "IT Dev 2",
+  "IT Infrastructure",
+  "Conference Room X",
+  "Conference Room Y",
+  "Conference Room Z",
+  "Meeting Room A",
+  "Meeting Room B",
+  "Meeting Room C",
+  "Meeting Room D",
+  "Human Resource Management",
+  "CEO/Directors",
+];
+
+export default rooms;

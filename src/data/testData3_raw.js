@@ -1,18 +1,18 @@
 //COMPUTERS
 var data = [
           {
-            name: "Reception ",
+            name: "Reception [1",
             type: "Room",
-            children: [
-              { name: "Main Reception PC ",
-               children: [
+            computers: [
+              { name: "Main Reception PC [1",
+               users: [
                 { name: "Jane", department: "Admin", time: 8460 },
                 { name: "Alison", department: "Admin", time: 9260 },
                 { name: "Chester", department: "Admin", time: 13164 },
                 ]
               },
               { name: "Second Reception PC",
-               children: [
+               users: [
                 { name: "Chester", department: "Admin", time: 4690 },
                 { name: "Jane", department: "Admin", time: 16890 },
                 { name: "Alison", department: "Admin", time: 10609 },
@@ -21,21 +21,21 @@ var data = [
             ],
           },
           {
-            name: 'Services',
+            name: 'Services 1',
             type: "Room",
-            children: [
+            computers: [
               { name: "Alex PC",
-                children: [
+                users: [
                   { name: "Alex", department: "Services", time: 28800 },
                 ]
               },
               { name: "Elliott PC",
-                children: [
+                users: [
                   { name: "Elliott", department: "Services", time: 29800 },
                 ]
               },
               { name: "Claire PC",
-                children: [
+                users: [
                   { name: "Claire", department: "Services", time: 26400 },
                 ]
               },
@@ -44,19 +44,19 @@ var data = [
           {
             name: 'Account Management',
             type: "Room",
-            children: [
+            computers: [
               { name: "Graham PC",
-                children: [
+                users: [
                   { name: "Graham", department: "Sales", time: 15840 },
                 ]
               },
               { name: "Lynne PC",
-                children: [
+                users: [
                   { name: "Elliott", department: "Sales", time: 29800 },
                 ]
               },
               { name: "Francis PC",
-                children: [
+                users: [
                   { name: "Francis", department: "Sales", time: 26400 },
                 ]
               },
@@ -65,34 +65,34 @@ var data = [
           {
             name: 'IT',
             type: "Room",
-            children: [
+            computers: [
               { name: "Adam PC",
-                children: [
+                users: [
                   { name: "Adam", department: "Software Development", time: 30001 },
                 ]
               },
               { name: "Tyler PC",
-                children: [
+                users: [
                   { name: "Tyler", department: "Software Development", time: 35020 },
                 ]
               },
               { name: "Carl PC",
-                children: [
+                users: [
                   { name: "Carl", department: "Software Development", time: 32560 },
                 ]
               },
               { name: "Ryan PC",
-                children: [
+                users: [
                   { name: "Ryan", department: "IT Infrastrucure", time: 29243 },
                 ]
               },
               { name: "Tyler PC",
-                children: [
+                users: [
                   { name: "Tyler", department: "Software Development", time: 11490 },
                 ]
               },
               { name: "Calum PC",
-                children: [
+                users: [
                   { name: "Calum", department: "IT Infrastrucure", time: 19670 },
                 ]
               },
@@ -101,19 +101,19 @@ var data = [
           {
             name: 'Management',
             type: "Room",
-            children: [
+            computers: [
               { name: "Arthur PC",
-                children: [
+                users: [
                   { name: "Arthur", department: "CEO",  time: 3000 },
                 ]
               },
               { name: "Glynis PC",
-                children: [
+                users: [
                   { name: "Glynis", department: "HR", time: 35020 },
                 ]
               },
               { name: "Ethan PC",
-                children: [
+                users: [
                   { name: "Ethan", department: "HR", time: 32560 },
                 ]
               }

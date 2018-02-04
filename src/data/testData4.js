@@ -4,18 +4,18 @@ var data = [
             name: "Reception ",
             type: "Room",
             children: [
-              { name: "Main Reception PC ",
+              { name: "Main Reception PC ", type: "Computer",
                children: [
-                { name: "Jane", type: "user", department: "Admin", time: 8460 },
-                { name: "Alison", type: "user", department: "Admin", time: 9260 },
-                { name: "Chester", type: "user", department: "Admin", time: 13164 },
+                { name: "Jane", type: "User", department: "Admin", time: 8460 },
+                { name: "Alison", type: "User", department: "Admin", time: 9260 },
+                { name: "Chester", type: "User", department: "Admin", time: 13164 },
                 ]
               },
-              { name: "Second Reception PC",
+              { name: "Second Reception PC", type: "Computer",
                children: [
-                { name: "Chester", type: "user", department: "Admin", time: 4690 },
-                { name: "Jane", type: "user", department: "Admin", time: 16890 },
-                { name: "Alison", type: "user", department: "Admin", time: 10609 },
+                { name: "Chester", type: "User", department: "Admin", time: 4690 },
+                { name: "Jane", type: "User", department: "Admin", time: 16890 },
+                { name: "Alison", type: "User", department: "Admin", time: 10609 },
                 ]
               },
             ],
@@ -24,19 +24,19 @@ var data = [
             name: 'Services',
             type: "Room",
             children: [
-              { name: "Alex PC",
+              { name: "Alex PC", type: "Computer",
                 children: [
-                  { name: "Alex", type: "user", department: "Services", time: 28800 },
+                  { name: "Alex", type: "User", department: "Services", time: 28800 },
                 ]
               },
-              { name: "Elliott PC",
+              { name: "Elliott PC", type: "Computer",
                 children: [
-                  { name: "Elliott", type: "user", department: "Services", time: 29800 },
+                  { name: "Elliott", type: "User", department: "Services", time: 29800 },
                 ]
               },
-              { name: "Claire PC",
+              { name: "Claire PC", type: "Computer",
                 children: [
-                  { name: "Claire", type: "user", department: "Services", time: 26400 },
+                  { name: "Claire", type: "User", department: "Services", time: 26400 },
                 ]
               },
             ]
@@ -45,19 +45,19 @@ var data = [
             name: 'Sales',
             type: "Room",
             children: [
-              { name: "Graham PC",
+              { name: "Graham PC", type: "Computer",
                 children: [
-                  { name: "Graham", type: "user", department: "Account Management", time: 15840 },
+                  { name: "Graham", type: "User", department: "Account Management", time: 15840 },
                 ]
               },
-              { name: "Lynne PC",
+              { name: "Lynne PC", type: "Computer",
                 children: [
-                  { name: "Elliott", type: "user", department: "Account Management", time: 29800 },
+                  { name: "Elliott", type: "User", department: "Account Management", time: 29800 },
                 ]
               },
-              { name: "Francis PC",
+              { name: "Francis PC", type: "Computer",
                 children: [
-                  { name: "Francis", type: "user", department: "Business Development", time: 26400 },
+                  { name: "Francis", type: "User", department: "Business Development", time: 26400 },
                 ]
               },
             ]
@@ -66,60 +66,60 @@ var data = [
             name: 'IT',
             type: "Room",
             children: [
-              { name: "Adam PC",
+              { name: "Adam PC", type: "Computer",
                 children: [
-                  { name: "Adam", type: "user", department: "Software Development", time: 30001 },
+                  { name: "Adam", type: "User", department: "Software Development", time: 30001 },
                 ]
               },
-              { name: "Tyler PC",
+              { name: "Tyler PC", type: "Computer",
                 children: [
-                  { name: "Tyler", type: "user", department: "Software Development", time: 35020 },
+                  { name: "Tyler", type: "User", department: "Software Development", time: 35020 },
                 ]
               },
-              { name: "Carl PC",
+              { name: "Carl PC", type: "Computer",
                 children: [
-                  { name: "Carl", type: "user", department: "Software Development", time: 32560 },
+                  { name: "Carl", type: "User", department: "Software Development", time: 32560 },
                 ]
               },
-              { name: "Ryan PC",
+              { name: "Ryan PC", type: "Computer",
                 children: [
-                  { name: "Ryan", type: "user", department: "IT Infrastrucure", time: 29243 },
+                  { name: "Ryan", type: "User", department: "IT Infrastrucure", time: 29243 },
                 ]
               },
-              { name: "Tyler PC",
+              { name: "Tyler PC", type: "Computer",
                 children: [
-                  { name: "Tyler", type: "user", department: "Software Development", time: 11490 },
+                  { name: "Tyler", type: "User", department: "Software Development", time: 11490 },
                 ]
               },
-              { name: "Calum PC",
+              { name: "Calum PC", type: "Computer",
                 children: [
-                  { name: "Calum", type: "user", department: "IT Infrastrucure", time: 19670 },
+                  { name: "Calum", type: "User", department: "IT Infrastrucure", time: 19670 },
                 ]
               },
-              { name: "Elisha PC",
+              { name: "Elisha PC", type: "Computer",
                 children: [
-                  { name: "Elisha", type: "user", department: "Business Analyst", time: 30210 },
+                  { name: "Elisha", type: "User", department: "Business Analyst", time: 30210 },
                 ]
               },
             ]
           },
           {
-            name: 'Management',
+            name: 'Management', type: "Computer",
             type: "Room",
             children: [
-              { name: "Arthur PC",
+              { name: "Arthur PC", type: "Computer",
                 children: [
-                  { name: "Arthur", type: "user", department: "CEO",  time: 3000 },
+                  { name: "Arthur", type: "User", department: "CEO",  time: 3000 },
                 ]
               },
-              { name: "Glynis PC",
+              { name: "Glynis PC", type: "Computer",
                 children: [
-                  { name: "Glynis", type: "user", department: "HR", time: 35020 },
+                  { name: "Glynis", type: "User", department: "HR", time: 35020 },
                 ]
               },
-              { name: "Ethan PC",
+              { name: "Ethan PC", type: "Computer",
                 children: [
-                  { name: "Ethan", type: "user", department: "HR", time: 32560 },
+                  { name: "Ethan", type: "User", department: "HR", time: 32560 },
                 ]
               }
             ]

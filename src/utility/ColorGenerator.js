@@ -1,9 +1,13 @@
 //var HUE_MASTERLIST = [0,45,90,135,180,225,270,315,360];
-var HUE_MASTERLIST = [,175,42,270,90,205,0]; //150 is a nice green
+var HUE_MASTERLIST = [175,42,270,90,205,0,150]; //150 is a nice green
 
-var generateHue = () => (HUE_MASTERLIST.length > 0) ? HUE_MASTERLIST.pop() : Math.round( Math.random()*360 );
+//var generateHue = () => (HUE_MASTERLIST.length > 0) ? HUE_MASTERLIST.pop() : Math.round( Math.random()*360 );
 
-const MakeColor = ()=> [generateHue(),'50%','50%'];
+//var generateHue = (r) => console.log("r: ", r," r*2-1: ",r*2-1, " asin :", Math.asin( ((r*2) - 1) )*360/Math.PI + 180);
+
+var generateHue = (r) => Math.asin( Math.round(15*((r*2) - 1))/15 )*360/Math.PI + 180;
+
+const MakeColor = ()=> [generateHue(Math.random()),'50%','50%'];
 //['#FF0000','#FFA500','#F8C12D','#8DC77B','#6B8E23','#2E8B57','#1E90FF','#8889DD','#483D8B'];
 
 var colorArr = [];

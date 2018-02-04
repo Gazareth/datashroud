@@ -1,81 +1,129 @@
 //COMPUTERS
 var data = [
           {
-            name: "Reception",
+            name: "Reception ",
             type: "Room",
-            time: 100,
-          },
-          {
-            name: "Lobby",
-            type: "Room",
-            time: 100,
+            computers: [
+              { name: "Main Reception PC ",
+               users: [
+                { name: "Jane", department: "Admin", time: 8460 },
+                { name: "Alison", department: "Admin", time: 9260 },
+                { name: "Chester", department: "Admin", time: 13164 },
+                ]
+              },
+              { name: "Second Reception PC",
+               users: [
+                { name: "Chester", department: "Admin", time: 4690 },
+                { name: "Jane", department: "Admin", time: 16890 },
+                { name: "Alison", department: "Admin", time: 10609 },
+                ]
+              },
+            ],
           },
           {
             name: 'Services',
             type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Services 2',
-            type: "Room",
-            time: 100,
+            computers: [
+              { name: "Alex PC",
+                users: [
+                  { name: "Alex", department: "Services", time: 28800 },
+                ]
+              },
+              { name: "Elliott PC",
+                users: [
+                  { name: "Elliott", department: "Services", time: 29800 },
+                ]
+              },
+              { name: "Claire PC",
+                users: [
+                  { name: "Claire", department: "Services", time: 26400 },
+                ]
+              },
+            ]
           },
           {
             name: 'Sales',
             type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Credit',
-            type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Boardroom',
-            type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Boardroom 2',
-            type: "Room",
-            time: 100,
+            computers: [
+              { name: "Graham PC",
+                users: [
+                  { name: "Graham", department: "Account Management", time: 15840 },
+                ]
+              },
+              { name: "Lynne PC",
+                users: [
+                  { name: "Elliott", department: "Account Management", time: 29800 },
+                ]
+              },
+              { name: "Francis PC",
+                users: [
+                  { name: "Francis", department: "Business Development", time: 26400 },
+                ]
+              },
+            ]
           },
           {
             name: 'IT',
             type: "Room",
-            time: 100,
-          },
-          {
-            name: 'IT 2',
-            type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Storage Upstairs',
-            type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Storage Downstairs',
-            type: "Room",
-            time: 100,
-          },
-          {
-            name: 'Utilities',
-            type: "Room",
-            time: 100,
-          },
-          {
-            name: 'HR',
-            type: "Room",
-            time: 100,
+            computers: [
+              { name: "Adam PC",
+                users: [
+                  { name: "Adam", department: "Software Development", time: 30001 },
+                ]
+              },
+              { name: "Tyler PC",
+                users: [
+                  { name: "Tyler", department: "Software Development", time: 35020 },
+                ]
+              },
+              { name: "Carl PC",
+                users: [
+                  { name: "Carl", department: "Software Development", time: 32560 },
+                ]
+              },
+              { name: "Ryan PC",
+                users: [
+                  { name: "Ryan", department: "IT Infrastrucure", time: 29243 },
+                ]
+              },
+              { name: "Tyler PC",
+                users: [
+                  { name: "Tyler", department: "Software Development", time: 11490 },
+                ]
+              },
+              { name: "Calum PC",
+                users: [
+                  { name: "Calum", department: "IT Infrastrucure", time: 19670 },
+                ]
+              },
+              { name: "Elisha PC",
+                users: [
+                  { name: "Elisha", department: "Business Analyst", time: 30210 },
+                ]
+              },
+            ]
           },
           {
             name: 'Management',
             type: "Room",
-            time: 100,
+            computers: [
+              { name: "Arthur PC",
+                users: [
+                  { name: "Arthur", department: "CEO",  time: 3000 },
+                ]
+              },
+              { name: "Glynis PC",
+                users: [
+                  { name: "Glynis", department: "HR", time: 35020 },
+                ]
+              },
+              { name: "Ethan PC",
+                users: [
+                  { name: "Ethan", department: "HR", time: 32560 },
+                ]
+              }
+            ]
           }
-  
           ];
 
 export default data;

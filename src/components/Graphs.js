@@ -18,7 +18,7 @@ Graphs.propTypes = {
   onDataViewContext: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,
   focusId: PropTypes.object.isRequired,
-  dataSet: PropTypes.array.isRequired
+  dataSet: PropTypes.object.isRequired
 };
 
 export default Graphs;

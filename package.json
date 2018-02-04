@@ -33,7 +33,9 @@
   "license": "MIT",
   "dependencies": {
     "d3-ease": "^1.0.3",
+    "melt-data": "^0.2.1",
     "react": "^15.4.2",
+    "react-animated-number": "^0.4.4",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
     "react-move": "^2.6.0",

@@ -13,7 +13,8 @@ render() {
     const f_ = (haveFocus || wasFocus); //has been focused recently?
     const f__ = haveFocus || (wasFocus && noFocus); //I am focused or no one is focused but I was the last to be
 
-    const sw = Math.pow(root.width*root.height, 1/14.5);  //stroke width
+    //const sw = Math.pow(root.width*root.height, 1/12);  //stroke width
+    const sw = Math.pow(Math.pow(root.width,2) + Math.pow(root.height,2), 0.475)*0.0065;  //stroke width
     const sdo = 2*(width+height); //stroke dash offset = perimeter * 2
   
     const edgeCase = (x-(root.x) === 0) ||  (y-(root.y) === 0) || (x+width === (root.x + root.width)) || (y+height === (root.y + root.height));
