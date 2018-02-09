@@ -3,8 +3,11 @@
 
 @import '_rectTransitions.scss';
 
+@import "./node_modules/react-vis/dist/styles/treemap";
+
+
 body{
-  background: #666
+  background: #999
 }
 
 svg {

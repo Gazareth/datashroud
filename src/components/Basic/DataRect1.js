@@ -12,16 +12,16 @@ const DataRect1 = React.createClass({
     const ad = Math.round(+(Math.random()*md)); //actual delay
     
     const st = { duration: td*2, delay: isFocus && !noFocus ? 0 : ad, ease: easeExpOut };//scale timing
-    const ot = { duration: td, delay: ad, ease: easeLinear };//opacity timing
+    const ot = { duration: td, delay:ad, ease: easeLinear };//opacity timing
     
     //const ssf = isFocus && !noFocus ? 1.05 : 1.0;//shape scale factor
-    const sv = {s: 0.5, e: 1.0};  //scale values
+    const sv = {s: 0.25, e: 1.0};  //scale values
     
     //const color = colors[Math.floor(index / root.children.length * 6)];
     const color = getColor(index);
     const fc = isFocus ? color : '#666'; //fill color
     //const fc = color;
-    const sw = isFocus ? 3.5 : 1.5; //stroke width
+    const sw = 3.5; //stroke width
     const sf = isFocus ? '#fff' : '#999';//stroke fill
     //const sf = '#fff';
     
@@ -51,7 +51,7 @@ const DataRect1 = React.createClass({
           ]}
           update={[
             {
-              opacity: [1.0],
+              opacity: [1],
               timing: ot,
             },
             {
@@ -66,24 +66,52 @@ const DataRect1 = React.createClass({
             },
           ]}
         >
-          {({ scale, opacity, fill, strokeWidth, strokeFill }) => {
+          {({ scale, opacity }) => {
             return (
-              <rect
-                key={parseInt("1"+(index.toString()))}
-                x={x}
-                y={y}
-                width={width}
-                height={height}
-                style={{
-                  fill,
-                  stroke: strokeFill,
-                  strokeWidth,
-                  opacity,
-                  transformOrigin: "center",
-                  transformBox: "fill-box",
-                  transform: `scale(${scale})`,
-                }}
-                />
+              <g>
+                <rect
+                  x={x}
+                  y={y}
+                  width={width}
+                  height={height}
+                  style={{
+                    fill:'#666',
+                    stroke: 'none',
+                    opacity: isFocus ? 0 : 1,
+                    pointerEvents: 'none'
+                  }}
+                  >
+                </rect>
+                <rect
+                  key={parseInt("1"+(index.toString()))}
+                  x={x}
+                  y={y}
+                  width={width}
+                  height={height}
+                  style={{
+                    fill: color,
+                    opacity: !isFocus && !noFocus ? 0.5 : opacity,
+                    transformOrigin: "center",
+                    transformBox: "fill-box",
+                    transform: `scale(${scale}) translateZ(300px)`,
+                    transformStyle: 'preserve-3d'
+                  }}
+                  >
+                </rect>
+                <rect
+                  x={x}
+                  y={y}
+                  width={width}
+                  height={height}
+                  style={{
+                    fill:'none',
+                    strokeWidth: sw,
+                    opacity: isFocus ? 1 : 0,
+                    pointerEvents: 'none'
+                  }}
+                  >
+                </rect>
+              </g>
             );
           }}
         </Animate>

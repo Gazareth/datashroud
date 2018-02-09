@@ -1,8 +1,12 @@
 //THIS ONE SEEMS REDUNDANT BUT SERVES AS A PLACE TO SELECT BETWEEN DIFFERENT TYPES OF GRAPH DEPENDNING ON VARIOUS STATE VALUES
 import React from "react";
 import PropTypes from "prop-types";
-import TreeCustom from "./TreeCustom.js";
+import TreeCustom from "./ReChartsTreeCustom.js";
 
+import TreemapExample from './ReactVisTreeMap.js';
+
+
+/*
 const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
   <TreeCustom 
     onDataViewClick={onDataViewClick}
@@ -11,6 +15,11 @@ const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet})
     focusId={focusId}
     dataSet={dataSet}
     />
+);
+*/
+
+const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
+  <TreemapExample/>
 );
 
 Graphs.propTypes = {

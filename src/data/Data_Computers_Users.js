@@ -4,6 +4,7 @@ import {castDataToTree} from "../utility/DataCasting.js";
 //GENERATE DAYTA - Creates "day" summaries for either computer or user activity
 //args
 //mode - 1 for users, 0 for computers
+//days - how many days back from today
 const generateDayta = function(mode = 0,days=0){
   const roomMax = rooms_.length -1 ;
   const deptMax = departments_.length - 1;
@@ -13,6 +14,8 @@ const generateDayta = function(mode = 0,days=0){
   const userMax = users_.length;  //number of users in the system
   const userPerCompDay = 5; //how many different users can use one computer per day
   const compPerUserDay = 7; //how many different computers can a user use per day
+  const maxEmail = 50;
+  const emailPerDay = maxEmail*.5 + Math.round(Math.random()*maxEmail*.5); //max number of emails per user per day
   
   const currentDay = 20180131;
   const maxDaysBack = days;
@@ -24,13 +27,16 @@ const generateDayta = function(mode = 0,days=0){
   for(var i=0;i<=maxDaysBack;i++){
     for(var j=0; j< (mode ? userMax :computerMax); j++ ){
       const w = rr(1,0.5) > 0.2;  //Worked? sometimes a computer or user may not have done anything for a particular day
-
+      const eml = ()=>(Math.round(Math.random()*emailPerDay));//emails per user per day
+      
       if( !mode ){
+        const u = w ? 1+rr(userPerCompDay,2) : 0; //number of users
         
         dayData.push({
           computer: computers_[j],
           room: rooms_[rr(roomMax)],
-          users: w ? 1+rr(userPerCompDay,2) : 0,
+          users: u,
+          emails: Array.from(Array(u).keys()).reduce(((a,c)=>a+eml()),0),  //accumulate random number of emails for all users
           time: w ? rr(timeMax) : 0,
         });
       } else {
@@ -38,6 +44,7 @@ const generateDayta = function(mode = 0,days=0){
           user: users_[j],
           department: departments_[rr(deptMax)],
           computers: w ? 1+rr(compPerUserDay,3) : 0,
+          emails: eml(),
           time: w ? rr(timeMax) : 0,
         });
       }
@@ -48,10 +55,22 @@ const generateDayta = function(mode = 0,days=0){
 };
 
 const ComputerData = generateDayta(0,0);
-const UserData = 0;
+const UserData = generateDayta(1,0);
 
 
 //temp function to quickly gen computer or user data
-export const getData = function(mode = 0,days=0){
-  return castDataToTree(ComputerData);
+//mode - what the data focuses on: computers or users
+//measures - the fields to do casts on and how to cast them
+//group - what field are the entities grouped by
+
+export const getData = function(
+  dataMode = "computer",
+  measures = [{n: "time", a: cast.sum, f: (s)=>s},{n: "users",a: cast.count}],
+  group = "room",
+  sizeField = "time",
+  sizeName = "size"
+  ){
+  const datas = {computer: ComputerData, user: UserData};
+  
+  return castDataToTree(datas[dataMode],measures,group,sizeField,sizeName);
 };
