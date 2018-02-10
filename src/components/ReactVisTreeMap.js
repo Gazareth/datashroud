@@ -22,22 +22,26 @@ import React from 'react';
 
 import {Treemap} from 'react-vis';
 
-function _getRandomData(total) {
+function _getRandomData(total,min=0) {
   const totalLeaves = total || Math.random() * 20;
   const leaves = [];
-  for (let i = 0; i < totalLeaves; i++) {
+  
+  for (let i = min; i < min+totalLeaves; i++) {
+  const rndm = Math.random();
+  const val = rndm * 1000;
     leaves.push({
-      name: total ? total : String(Math.random()).slice(0, 3),
-      size: Math.random() * 1000,
-      color: Math.random(),
+      name: total ? total : Math.round(val),
+      size: val,
+      opacity: rndm,
+      color: rndm,
       style: {
-        border: 'thin solid red'
+        border: '3.25px solid white'
       }
     });
   }
   return {
     title: '',
-    color: 1,
+    style: { backgroundColor: '#fff'},
     children: leaves
   };
 };
@@ -47,7 +51,7 @@ export default class DynamicTreemapExample extends React.Component {
     super(props);
     this.state = {
       hoveredNode: false,
-      treemapData: _getRandomData(20),
+      treemapData: _getRandomData(100,50),
       useCirclePacking: false
     };
   }
@@ -56,18 +60,15 @@ export default class DynamicTreemapExample extends React.Component {
   render() {
     const {hoveredNode, useCirclePacking} = this.state;
     const treeProps = {
-      animation: {
-        damping: 9,
-        stiffness: 300
-      },
+      animation: 'noWobble',
       data: this.state.treemapData,
       onLeafMouseOver: x => this.setState({hoveredNode: x}),
       onLeafMouseOut: () => this.setState({hoveredNode: false}),
-      onLeafClick: () => this.setState({treemapData: _getRandomData()}),
-      height: 300,
+      onLeafClick: () => console.log(this.state.hoveredNode) || this.setState({treemapData: _getRandomData()}),
+      width: 1024,
+      height: 650,
       mode: this.state.useCirclePacking ? 'circlePack' : 'squarify',
       getLabel: x => x.name,
-      width: 350
     };
     return (
       <div className="dynamic-treemap-example">

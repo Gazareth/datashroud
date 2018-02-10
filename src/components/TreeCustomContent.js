@@ -22,10 +22,10 @@ const TreeContent = React.createClass({
     const setFocus = function(){
       if( this.node !== undefined ){
         //console.log(this.node.parentElement.parentElement);
-        this.node.parentElement.parentElement.parentElement.append(this.node.parentElement.parentElement);
+        //this.node.parentElement.parentElement.parentElement.append(this.node.parentElement.parentElement);
         
         //add scale class
-        setTimeout( (()=>this.node.parentElement.parentElement.classList.add("tree-focus")).bind(this), 1);
+        //setTimeout( (()=>this.node.parentElement.parentElement.classList.add("tree-focus")).bind(this), 1);
       }
       
       onFocus((index+1));
@@ -36,7 +36,7 @@ const TreeContent = React.createClass({
     const unFocus = function(){
       if( this.node !== undefined ){
         //add scale class
-        setTimeout( (()=>this.node.parentElement.parentElement.classList.remove("tree-focus")).bind(this), 1);
+        //setTimeout( (()=>this.node.parentElement.parentElement.classList.remove("tree-focus")).bind(this), 1);
       }
       
       onFocus(-(index+1));

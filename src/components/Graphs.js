@@ -6,7 +6,6 @@ import TreeCustom from "./ReChartsTreeCustom.js";
 import TreemapExample from './ReactVisTreeMap.js';
 
 
-/*
 const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
   <TreeCustom 
     onDataViewClick={onDataViewClick}
@@ -16,11 +15,10 @@ const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet})
     dataSet={dataSet}
     />
 );
-*/
 
-const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
+/*const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
   <TreemapExample/>
-);
+);*/
 
 Graphs.propTypes = {
   onDataViewClick: PropTypes.func.isRequired,
