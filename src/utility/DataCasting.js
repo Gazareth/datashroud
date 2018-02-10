@@ -26,13 +26,12 @@ const multiCast = function(d,g,t){
   //create the sets of casted tables
   const s = t.map((e)=>cast(d,g,e.a,e.n));
   
-  //grab the first of the sets, for each row - x, create a new object containing all the values from all sets
+  //grab the first of the sets. For each row - x, create a new object containing all the values from all sets
   //create this object by accumulating the properties (into ta - total accumulator) from each of the objects created by
   //iterating through each cs - current set, which is actually a bunch of rows that can be reduced to a single object by
-  //accumulating all of the props (into accumulator 'a') from rows with a [group] value the same as that of x
-  const r = s[0].map((x)=> ({...x, ...s.reduce((ta,cs)=>cs.reduce((a,c)=> c[g] === x[g] ? {...a, ...c} : a,{}),{}) }) );
+  //accumulating all of the props (into accumulator 'a') from rows with similar [group] value the same as that of x
+  const r = s[0].map((x)=> ({...x, ...s.reduce((ta,cs)=>({...ta, ...cs.reduce((a,c)=> c[g] === x[g] ? {...a, ...c} : a,{}) }),{}) }) );
 
-  
   return r;
 };
 
@@ -40,14 +39,15 @@ const multiCast = function(d,g,t){
 export const reCast = function(tmObj,sizeField, sizeKey, minSize = minTreeBlockSize){
   //get the largest element, then we can do the alias for the tree map so there is no 'zero' boxes
   const datMax = Math.max.apply(null,tmObj.data.map((o)=>o[sizeField]));
+  //console.log("ABOUT TO RECAST! ",tmObj.data,sizeField);
   
-/*  console.log({
+/*  console.log("RECASTED!: ",{
     ...tmObj,
     data: tmObj.data.map((e)=>({ ...e, [sizeKey]: Math.max(e[sizeField] ? e[sizeField] : 0,Math.round(datMax*minSize))}))
   });*/
   return {
     ...tmObj,
-    data: tmObj.data.map((e)=>({ ...e, [sizeKey]: Math.max(e[sizeField] ? e[sizeField] : 0,Math.round(datMax*minSize))}))
+    data: tmObj.data.map((e)=>({ ...e, [sizeKey]: (e[sizeField] ? e[sizeField] : 0) + Math.round(datMax*minSize), [sizeKey+"Ratio"]: e[sizeField] ? e[sizeField]/datMax : 0}))
   };
 };
 
@@ -62,12 +62,12 @@ export const reCast = function(tmObj,sizeField, sizeKey, minSize = minTreeBlockS
 //minSize - the minimum Block Size of a 
 export const castDataToTree = function(data, measures, group, sizeField, sizeKey, minSize = minTreeBlockSize) {  
   let dat = data;
-  
+
   //cast to get the sum or count or whatever of what we wanted
   //dat = cast(dat,[group], aggr[aggrMode],orientation);
   dat = multiCast(dat,[group],measures);
-  
-  const tmObj = {fields: measures.map((e)=>e.n), group: "room", dataKey: sizeField, sizeKey, format: measures.find((e)=>e.f !== undefined).f, data: dat}; //tree map object
+
+  const tmObj = {fields: measures.map((e)=>e.n), group: "room", dataKey: sizeField, sizeKey, format: measures.find((e)=>e.n === sizeField).f, data: dat}; //tree map object
 
   return reCast(tmObj,sizeField,sizeKey,minSize);
 };

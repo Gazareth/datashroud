@@ -15,7 +15,7 @@ const TreeText = React.createClass({
    const {haveFocus, noFocus, fontSize, stroke, scaleFactor, vFactor, verticalAnchor, x, y, width, text, isNumber, isTime} = this.props;
     
     const ff = haveFocus ? 1.1 : 1.0;//focusFactor
-    const fs = fontSize*scaleFactor*ff;//fontsize
+    const fs = fontSize*scaleFactor*vFactor*ff;//fontsize
     
     const ss = ff*(scaleFactor**0.5);//stroke strength
     const op =  haveFocus || noFocus ? 1.0 : 0.25;  //opacity
@@ -94,18 +94,20 @@ const TreeText = React.createClass({
                 width={width*0.8}
                 textAnchor="middle"
                 verticalAnchor={verticalAnchor}
-                fontSize={SF+'px'}
+                fontSize={fs+'px'}
                 lineHeight={fs*1.2+'px'}
-                fill={colr}
-                stroke={colr}
-                strokeOpacity={ss}
-                strokeWidth={ss}
+                fill='#fff'
+                stroke='#fff'
+                //fill={colr}
+                //stroke={colr}
+                //strokeOpacity={ss}
+                //strokeWidth={ss}
                 style={{
-                  opacity, 
+                  //opacity, 
                   pointerEvents: 'none',
                   userSelect: 'none',
-                  transform: `translate3d(0px, ${OF}px, 300px)`,
-                  transformStyle: 'preserve-3d'
+                  //transform: `translate3d(0px, ${OF}px, 300px)`,
+                  //transformStyle: 'preserve-3d'
                 }}
               >
                 {isNumber ? isTime ? duration.fmt(1000 * parseInt(text)) : numeral(TV).format('0,0') : text}

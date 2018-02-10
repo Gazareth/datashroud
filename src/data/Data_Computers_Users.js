@@ -1,5 +1,7 @@
 import {rooms_, departments_, users_, computers_} from "./Data_Dimensions.js";
 import {castDataToTree} from "../utility/DataCasting.js";
+import numeral from "numeral";
+const duration = require('human-duration');
 
 //GENERATE DAYTA - Creates "day" summaries for either computer or user activity
 //args
@@ -16,7 +18,7 @@ const generateDayta = function(mode = 0,days=0){
   const compPerUserDay = 7; //how many different computers can a user use per day
   const maxEmail = 50;
   const emailPerDay = maxEmail*.5 + Math.round(Math.random()*maxEmail*.5); //max number of emails per user per day
-  
+
   const currentDay = 20180131;
   const maxDaysBack = days;
   
@@ -31,14 +33,17 @@ const generateDayta = function(mode = 0,days=0){
       
       if( !mode ){
         const u = w ? 1+rr(userPerCompDay,2) : 0; //number of users
+        const e = Array.from(Array(u).keys()).reduce(((a,c)=>a+eml()),0);
         
         dayData.push({
           computer: computers_[j],
           room: rooms_[rr(roomMax)],
           users: u,
-          emails: Array.from(Array(u).keys()).reduce(((a,c)=>a+eml()),0),  //accumulate random number of emails for all users
+          emails: e,  //accumulate random number of emails for all users
           time: w ? rr(timeMax) : 0,
         });
+        
+        
       } else {
         dayData.push({
           user: users_[j],
@@ -65,12 +70,14 @@ const UserData = generateDayta(1,0);
 
 export const getData = function(
   dataMode = "computer",
-  measures = [{n: "time", a: cast.sum, f: (s)=>s},{n: "users",a: cast.count}],
+  measures = [
+    {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))}
+  ],
   group = "room",
   sizeField = "time",
   sizeName = "size"
   ){
   const datas = {computer: ComputerData, user: UserData};
-  
+    
   return castDataToTree(datas[dataMode],measures,group,sizeField,sizeName);
 };

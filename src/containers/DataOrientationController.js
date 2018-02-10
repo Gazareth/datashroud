@@ -1,16 +1,19 @@
 import { connect } from 'react-redux';
 import { goDeeper, goShallower, focusSector } from '../actions';
+import data from "../data/testData2.js";
 import Graphs from "../components/Graphs.js";
+
+import { getData } from "../data/Data_Computers_Users.js";
+const dataF = getData();
 
 const getDataLevelData = (dataLevel) => {
   //console.log("GETTING DATA: ",data); //TODO: use dataLevel to get different datas
   return dataF;
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    dataSet: ownProps.dataSet,
-    //dataSet: getDataLevelData(state.dataLevel.level),
+    dataSet: getDataLevelData(state.dataLevel.level),
     focusId: state.dataFocus
   };
 };
