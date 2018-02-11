@@ -1,13 +1,11 @@
 const maxDataLevel = 2;
 
-export const dataLevel = (state = {level: 0, maxLevel: 2}, action) => {
+export const dataLevel = (state = {level: 0, maxLevel: maxDataLevel}, action) => {
   switch (action.type) {
     case 'INCREASE_LEVEL':
       return {...state, level: state.level + (state.level < state.maxLevel ? 1 : 0)};
     case 'DECREASE_LEVEL':
       return {...state, level: state.level + (state.level > 0 ? -1 : 0)};
-    case 'FOCUS_INDEX':
-      return {...state, focusedSector: action.payload};
     default:
       return state;
   }

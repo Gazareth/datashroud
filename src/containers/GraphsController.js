@@ -10,6 +10,7 @@ const getDataLevelData = (dataLevel) => {
 const mapStateToProps = (state, ownProps) => {
   return {
     dataSet: ownProps.dataSet,
+    dataLevel: state.dataLevel.level,
     //dataSet: getDataLevelData(state.dataLevel.level),
     focusId: state.dataFocus
   };

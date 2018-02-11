@@ -5,7 +5,7 @@ import TreeText from "./Basic/TreeText_Simple.js";
 
 const TreeContent = React.createClass({
   render() {
-    const { dataDepth, dataGroup, dataKey, dataFormat, sizeRatio, onDataViewClick, onDataViewContext, onFocus, focusId, getColor, runSeed, 
+    const { dataDepth, dataGroup, dataKey, dataFormat, sizeRatioKey, onDataViewClick, onDataViewContext, onFocus, focusId, getColor, runSeed, 
            root, depth, x, y, width, height, index, payload, rank, name } = this.props;
 
     const root_ = dataDepth === 1 ? root.children[index] : depth > 1 ? root : root.children[index];
@@ -18,6 +18,7 @@ const TreeContent = React.createClass({
     //console.log(fsf);
     
     const noFocus = focusId.now < 0;
+    let isDead = false;
     
     const setFocus = function(){
       if( this.node && this.node.parentElement && this.node.parentElement.parentElement ){
@@ -46,6 +47,8 @@ const TreeContent = React.createClass({
       <g
         onMouseOver={depth === 1 ? setFocus.bind(this) : null}
         onMouseLeave={depth === 1 ? unFocus.bind(this) : null}
+        onClick={onDataViewClick}
+        onContextMenu={onDataViewContext}
         ref={(n)=>this.node = n}
         >
         {
@@ -53,7 +56,7 @@ const TreeContent = React.createClass({
           <DataRect1
               isFocus={focusId.now === root_.index }
               noFocus={noFocus}
-              colors={getColor(index,sizeRatio,runSeed)}
+              colors={getColor(index,root_[sizeRatioKey],runSeed)}
               {...this.props}
             />
           : (root_ != undefined && depth === 2 && (focusId.now === root_.index) || (focusId.prev === root_.index && noFocus)) ?

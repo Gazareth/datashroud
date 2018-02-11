@@ -2,15 +2,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TreeCustom from "./TreeMap/ReChartsTreeCustom.js";
+import {castDataToTree} from "../utility/DataCasting.js";
 
-
-const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
+const Graphs = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet, dataLevel}) => (
   <TreeCustom 
     onDataViewClick={onDataViewClick}
     onDataViewContext={onDataViewContext}
     onFocus={onFocus}
+    thisLevel={1}
     focusId={focusId}
-    dataSet={dataSet}
+    dataSet={castDataToTree(dataSet)}
+    dataLevel={dataLevel}
     />
 );
 

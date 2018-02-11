@@ -10,28 +10,29 @@ const dataKey = "time";
 
 
 
-const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet}) => (
+const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet, isDead}) => (
   <ResponsiveContainer
       height={"100%"}
       aspect={16/9}
     >
       <Treemap
         data={dataSet.data}
-        dataKey={dataSet.sizeKey}
+        dataKey={dataSet.sK}
         aspectRatio={4/3}
         isAnimationActive={false}
         animationEasing="ease-out"
         animationDuration={350}
+        pointerEvents={ isDead ? 'all' : 'none' }
         //fill="#666"
         content={<TreeContent
                    runSeed={Math.random()}  //TODO: Make this into a configurable color picker thing
                    dataDepth={getDepth(dataSet.data)}
                    dataGroup={dataSet.group}
-                   dataKey={dataSet.dataKey}
+                   dataKey={dataSet.dK}
                    dataFormat={dataSet.format}
-                   sizeRatio={dataSet[sizeKey+"Ratio"]}
-                   onClick={onDataViewClick}
-                   onContextMenu={onDataViewContext}
+                   sizeRatioKey={dataSet.sK+"Ratio"}
+                   onDataViewClick={onDataViewClick}
+                   onDataViewContext={onDataViewContext}
                    onFocus={onFocus}
                    focusId={focusId}
                    getColor={getColor}/>}

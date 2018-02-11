@@ -1,8 +1,5 @@
-import {rooms_, departments_, users_, computers_} from "./Data_Dimensions.js";
-import {castDataToTree} from "../utility/DataCasting.js";
-import RP from "../utility/RandomPartitioner.js";
-import numeral from "numeral";
-const duration = require('human-duration');
+import {rooms_, departments_, users_, computers_} from "./DATAGEN_Dimensions.js";
+import RP from "../../utility/RandomPartitioner.js";
 
 
 //GENERATE DAYTA - Creates "day" summaries for either computer or user activity
@@ -68,26 +65,5 @@ const generateDayta = function(mode = 0,days=0){
   return dayData;
 };
 
-const ComputerData = generateDayta(0,0);
-const UserData = generateDayta(1,0);
-
-
-//temp function to quickly gen computer or user data
-//mode - what the data focuses on: computers or users
-//measures - the fields to do casts on and how to cast them
-//group - what field are the entities grouped by
-//sizeField - the field that is used to determine size of the treemap box
-//
-export const getData = function(
-  dataMode = "computer",
-  measures = [
-    {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))}
-  ],
-  group = "room",
-  sizeField = "time",
-  sizeName = "size"
-  ){
-  const datas = {computer: ComputerData, user: UserData};
-    
-  return castDataToTree(datas[dataMode],measures,group,sizeField,sizeName);
-};
+export const ComputerData = generateDayta(0,0);
+export const UserData = generateDayta(1,0);
