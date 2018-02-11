@@ -12,10 +12,11 @@ const dataF = getData(
   [
     {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))},
     {n: "users",a: cast.count, f: (s)=>numeral(s).format('0,0')+" users"},
-    {n: "emails",a: cast.sum, f: (s)=>numeral(s).format('0,0')+" emails sent"}
+    {n: "emails",a: cast.sum, f: (s)=>numeral(s).format('0,0')+" emails sent"},
+    {n: "browsing",a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))+" browsing tinternet"},
   ],
   "room",
-  "emails",
+  "browsing",
   "size"
 );
 

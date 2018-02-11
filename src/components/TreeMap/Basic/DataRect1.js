@@ -24,7 +24,7 @@ const DataRect1 = React.createClass({
     const sc = isFocus ? colors[1] : noFocus ? '#333' : '#666'; //stroke color
     //const fc = color;
 
-    const sw = isFocus ? 4 : noFocus ? 3 : 2; //stroke width
+    const sw = isFocus ? 4 : noFocus ? 4.5 : 2; //stroke width
     //const sf = '#fff';
     
     return(
@@ -71,6 +71,8 @@ const DataRect1 = React.createClass({
                   key={parseInt("1"+(index.toString()))}
                   x={x}
                   y={y}
+                  rx={isFocus ? 1 : 1.5}
+                  ry={isFocus ? 1 : 1.5}
                   width={width}
                   height={height}
                   style={{

@@ -1,7 +1,9 @@
 import {rooms_, departments_, users_, computers_} from "./Data_Dimensions.js";
 import {castDataToTree} from "../utility/DataCasting.js";
+import RP from "../utility/RandomPartitioner.js";
 import numeral from "numeral";
 const duration = require('human-duration');
+
 
 //GENERATE DAYTA - Creates "day" summaries for either computer or user activity
 //args
@@ -18,7 +20,8 @@ const generateDayta = function(mode = 0,days=0){
   const compPerUserDay = 7; //how many different computers can a user use per day
   const maxEmail = 50;
   const emailPerDay = maxEmail*.5 + Math.round(Math.random()*maxEmail*.5); //max number of emails per user per day
-
+  const browsingMax = 0.8; //maximum portion of time per day spent browsing tinternet
+  
   const currentDay = 20180131;
   const maxDaysBack = days;
   
@@ -30,10 +33,12 @@ const generateDayta = function(mode = 0,days=0){
     for(var j=0; j< (mode ? userMax :computerMax); j++ ){
       const w = rr(1,0.5) > 0.2;  //Worked? sometimes a computer or user may not have done anything for a particular day
       const eml = ()=>(Math.round(Math.random()*emailPerDay));//emails per user per day
+      const bt = (t)=>Math.round(t - browsingMax*(t*Math.random()));  //resolves time spent browsing
       
       if( !mode ){
         const u = w ? 1+rr(userPerCompDay,2) : 0; //number of users
-        const e = Array.from(Array(u).keys()).reduce(((a,c)=>a+eml()),0);
+        const e = Array.from(Array(u).keys()).reduce(((a,c)=>a+eml()),0); //number of emails sent on this day
+        const t = w ? rr(timeMax) : 0;  //time worked on this computer
         
         dayData.push({
           computer: computers_[j],
@@ -41,16 +46,20 @@ const generateDayta = function(mode = 0,days=0){
           users: u,
           emails: e,  //accumulate random number of emails for all users
           time: w ? rr(timeMax) : 0,
+          browsing: bt(t),
         });
         
         
       } else {
+        const t = w ? rr(timeMax) : 0;  //time worked on computers by this user on this day
+        
         dayData.push({
           user: users_[j],
           department: departments_[rr(deptMax)],
           computers: w ? 1+rr(compPerUserDay,3) : 0,
           emails: eml(),
           time: w ? rr(timeMax) : 0,
+          browsing: bt(t),
         });
       }
     }
@@ -67,7 +76,8 @@ const UserData = generateDayta(1,0);
 //mode - what the data focuses on: computers or users
 //measures - the fields to do casts on and how to cast them
 //group - what field are the entities grouped by
-
+//sizeField - the field that is used to determine size of the treemap box
+//
 export const getData = function(
   dataMode = "computer",
   measures = [

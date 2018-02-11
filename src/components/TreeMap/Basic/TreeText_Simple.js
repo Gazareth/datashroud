@@ -29,7 +29,7 @@ const TreeText = React.createClass({
               <Text
                 x={x}
                 y={y}
-                width={width*0.75}
+                width={width*0.65}
                 fontSize={fs+'px'}
                 lineHeight={fs*1.2+'px'}
                 verticalAnchor={verticalAnchor}
