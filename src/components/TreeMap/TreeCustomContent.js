@@ -5,7 +5,7 @@ import TreeText from "./Basic/TreeText_Simple.js";
 
 const TreeContent = React.createClass({
   render() {
-    const { dataDepth, dataGroup, dataKey, dataFormat, sizeRatioKey, onDataViewClick, onDataViewContext, onFocus, focusId, getColor, runSeed, 
+    const { dataDepth, dataGroup, dataKey, dataFormat, sizeRatioKey, onDataViewClick, onDataViewContext, onFocus, focusId, getColor, colorSeed, 
            root, depth, x, y, width, height, index, payload, rank, name } = this.props;
 
     const root_ = dataDepth === 1 ? root.children[index] : depth > 1 ? root : root.children[index];
@@ -20,13 +20,15 @@ const TreeContent = React.createClass({
     const noFocus = focusId.now < 0;
     let isDead = false;
     
+    const parentCheck = (node)=> this.node && this.node.parentElement && this.node.parentElement.parentElement;
+    
     const setFocus = function(){
-      if( this.node && this.node.parentElement && this.node.parentElement.parentElement ){
+      if( parentCheck() ){
         //console.log(this.node.parentElement.parentElement);
         this.node.parentElement.parentElement.parentElement.append(this.node.parentElement.parentElement);
         
         //add scale class
-        setTimeout( (()=>this.node.parentElement.parentElement.classList.add("tree-focus")).bind(this), 1);
+        setTimeout( (()=> parentCheck() ? this.node.parentElement.parentElement.classList.add("tree-focus") : null).bind(this), 1);
       }
       
       onFocus((index+1));
@@ -35,9 +37,9 @@ const TreeContent = React.createClass({
 
     
     const unFocus = function(){
-      if( this.node && this.node.parentElement && this.node.parentElement.parentElement ){
+      if( parentCheck() ){
         //add scale class
-        setTimeout( (()=>this.node.parentElement.parentElement.classList.remove("tree-focus")).bind(this), 1);
+        setTimeout( (()=> parentCheck() ? (this.node.parentElement.parentElement.classList.remove("tree-focus")) : null).bind(this), 1);
       }
       
       onFocus(-(index+1));
@@ -56,7 +58,7 @@ const TreeContent = React.createClass({
           <DataRect1
               isFocus={focusId.now === root_.index }
               noFocus={noFocus}
-              colors={getColor(index,root_[sizeRatioKey],runSeed)}
+              colors={getColor(index,root_[sizeRatioKey],colorSeed)}
               {...this.props}
             />
           : (root_ != undefined && depth === 2 && (focusId.now === root_.index) || (focusId.prev === root_.index && noFocus)) ?

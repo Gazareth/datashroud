@@ -10,7 +10,7 @@ const dataKey = "time";
 
 
 
-const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet, isDead}) => (
+const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet, colSeed, canMouse, isDead}) => (
   <ResponsiveContainer
       height={"100%"}
       aspect={16/9}
@@ -22,10 +22,9 @@ const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataS
         isAnimationActive={false}
         animationEasing="ease-out"
         animationDuration={350}
-        pointerEvents={ isDead ? 'all' : 'none' }
+        pointerEvents={canMouse && !isDead ? 'all' : 'none'}
         //fill="#666"
         content={<TreeContent
-                   runSeed={Math.random()}  //TODO: Make this into a configurable color picker thing
                    dataDepth={getDepth(dataSet.data)}
                    dataGroup={dataSet.group}
                    dataKey={dataSet.dK}
@@ -35,6 +34,7 @@ const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataS
                    onDataViewContext={onDataViewContext}
                    onFocus={onFocus}
                    focusId={focusId}
+                   colorSeed={colSeed}
                    getColor={getColor}/>}
       />
     </ResponsiveContainer>

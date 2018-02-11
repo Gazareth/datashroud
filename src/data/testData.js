@@ -1,33 +1,32 @@
-import {ComputerData, UserData} from "./DataGeneration/DATAGEN_Computers_Users.js";
+import {ComputerData, UserData, TypeCounts} from "./DataGeneration/DATAGEN_Computers_Users.js";
 import numeral from "numeral";
 const duration = require('human-duration');
 
+//FORMATTING; s - string
+const f_t = (s)=>duration.fmt(1000 * parseInt(s)); //TIME
+const f_i = (s)=>numeral(s).format('0,0'); //INTEGER
 
-/*const getData = function(
-  dataMode = "computer",
-  measures = [
-    {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))}
-  ],
-  group = "room",
-  sizeField = "time",
-  sizeName = "size"
-  ){
-  const datas = {computer: ComputerData, user: UserData};
-  return castDataToTree(datas[dataMode],measures,group,sizeField,sizeName);
-};*/
-  
-
-const level0 = ["computers","users"];  //todo: these strings should be dataShroud objects
+const level0 =
+  {
+    data: TypeCounts,
+    primeEntities: {0: "Computers", 1: "Users"},
+    measures:  [
+        {n: "count",a: cast.sum, f: (s)=>f_i(s)},
+      ],
+    group: "type",
+    yField: "count",
+    yAlias: "size"
+  };
 
 //computers
 const level1_0 = {
       data: ComputerData,
       primeEntity: "computer",
       measures:  [
-          {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))},
-          {n: "users",a: cast.count, f: (s)=>numeral(s).format('0,0')+" users"},
-          {n: "emails",a: cast.sum, f: (s)=>numeral(s).format('0,0')+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))+" browsing tinternet"},
+          {n: "time", a: cast.sum, f: (s)=>f_t(s)},
+          {n: "users",a: cast.count, f: (s)=>f_i(s)+" users"},
+          {n: "emails",a: cast.sum, f: (s)=>f_i(s)+" emails sent"},
+          {n: "browsing",a: cast.sum, f: (s)=>f_t(s)+" browsing tinternet"},
         ],
       group: "room",
       yField: "browsing",
@@ -40,7 +39,7 @@ const level1_1 = {
       primeEntity: "computer",
       measures:  [
           {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))},
-          {n: "computers",a: cast.count, f: (s)=>numeral(s).format('0,0')+" users"},
+          {n: "computers",a: cast.count, f: (s)=>numeral(s).format('0,0')+" computers"},
           {n: "emails",a: cast.sum, f: (s)=>numeral(s).format('0,0')+" emails sent"},
           {n: "browsing",a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))+" browsing tinternet"},
         ],

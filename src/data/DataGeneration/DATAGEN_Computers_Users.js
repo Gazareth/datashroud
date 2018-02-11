@@ -1,6 +1,6 @@
 import {rooms_, departments_, users_, computers_} from "./DATAGEN_Dimensions.js";
 import RP from "../../utility/RandomPartitioner.js";
-
+require('melt-data');
 
 //GENERATE DAYTA - Creates "day" summaries for either computer or user activity
 //args
@@ -38,6 +38,7 @@ const generateDayta = function(mode = 0,days=0){
         const t = w ? rr(timeMax) : 0;  //time worked on this computer
         
         dayData.push({
+          type: "Computers",
           computer: computers_[j],
           room: rooms_[rr(roomMax)],
           users: u,
@@ -51,6 +52,7 @@ const generateDayta = function(mode = 0,days=0){
         const t = w ? rr(timeMax) : 0;  //time worked on computers by this user on this day
         
         dayData.push({
+          type: "Users",
           user: users_[j],
           department: departments_[rr(deptMax)],
           computers: w ? 1+rr(compPerUserDay,3) : 0,
@@ -67,3 +69,8 @@ const generateDayta = function(mode = 0,days=0){
 
 export const ComputerData = generateDayta(0,0);
 export const UserData = generateDayta(1,0);
+
+export const TypeCounts = cast([...ComputerData, ...UserData],["type"],cast.count,"count");
+
+//console.log("Casting TypeCounts FROM",[...ComputerData, ...UserData]);
+//console.log("GOT: ",TypeCounts);

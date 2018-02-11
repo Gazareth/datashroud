@@ -1,6 +1,6 @@
 require('melt-data');
 
-const minLeafSizeRatio = 0.15;
+const minLeafSizeRatio = 0.15;  //for treemap
 
 // -- DATASHROUD OBJECT -- ############################################################
 //
@@ -51,16 +51,12 @@ const multiCast = function(d,g,t){
 //This will take a treeData object and a field and generate size values using the field's values, but with a min cutoff
 export const reCast = function(tmO, minSize = minTreeBlockSize){
   //get the largest element, then we can do the alias for the tree map so there is no 'zero' boxes
-  const datMax = Math.max.apply(null,tmO.data.map((o)=>o[tmO.dK]));
-  //console.log("ABOUT TO RECAST! ",tmO.data,sizeField);
+  const mM = (d,f)=>f.apply(null,d.data.map((o)=>o[tmO.dK])); //min or max generator
+  const dat = [mM(tmO,Math.min),mM(tmO,Math.max)];
   
-/*  console.log("RECASTED!: ",{
-    ...tmO,
-    data: tmO.data.map((e)=>({ ...e, [sizeKey]: Math.max(e[sizeField] ? e[sizeField] : 0,Math.round(datMax*minSize))}))
-  });*/
   return {
     ...tmO,
-    data: tmO.data.map((e)=>({ ...e, [tmO.sK]: (e[tmO.dK] ? e[tmO.dK] : 0) + Math.round(datMax*minSize), [tmO.sK+"Ratio"]: e[tmO.dK] ? e[tmO.dK]/datMax : 0}))
+    data: tmO.data.map((e)=>({ ...e, [tmO.sK]: (e[tmO.dK] ? e[tmO.dK] : 0) + Math.round(dat[1]*minSize), [tmO.sK+"Ratio"]: e[tmO.dK] ? (e[tmO.dK] - dat[0])/(dat[1] - dat[0]) : 0}))
   };
 
 };
@@ -91,10 +87,9 @@ export const reCast = function(tmO, minSize = minTreeBlockSize){
 export const castDataToTree = function(dsO, minSize = minLeafSizeRatio) {  
   let dat = dsO.data;
 
-  //console.log("ABOUT TO MULTICAST",dat,[dsO.group],dsO.measures);
   //cast to get the sum or count or whatever of what we wanted
   dat = multiCast(dat,[dsO.group],dsO.measures);
-
+  
   //create treeMapObject
   //the measures become just their names, called fields
   //group g, datakey dK, sizeKey sK come straight from the dsO

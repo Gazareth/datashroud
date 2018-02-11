@@ -7,7 +7,7 @@ const md = 350;//maximum delay
 
 const DataRect1 = React.createClass({
   render() {
-   const {isFocus,noFocus,x,y,width,height,colors,getColor,index,root} = this.props;
+   const {isFocus,noFocus,x,y,width,height,colors,index,root} = this.props;
 
     //const ad = Math.round(+(Math.random()*md))*; //actual delay
     const ad = (td/12)*(index+(Math.random()/2));

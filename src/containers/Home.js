@@ -6,9 +6,6 @@ import data from "../data/testData.js";
 import numeral from "numeral";
 const duration = require('human-duration');
 
-
-const dataF = data[1];
-
 // Home page component
 export default class Home extends React.Component {
   // render
@@ -21,7 +18,7 @@ export default class Home extends React.Component {
         </button>
         
         <GraphsController
-          dataSet={dataF}/>
+          dataSet={data}/>
       </div>
     );
   }
