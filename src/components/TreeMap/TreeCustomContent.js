@@ -3,6 +3,8 @@ import DataRect1 from "./Basic/DataRect1.js";
 import DataRect2 from "./Basic/DataRect2.js";
 import TreeText from "./Basic/TreeText_Simple.js";
 
+import {hasClass, addClass, removeClass, detectIE} from "../../utility/ClassManipulation.js";
+
 const TreeContent = React.createClass({
   render() {
     const { dataDepth, dataGroup, dataKey, dataFormat, sizeRatioKey, onDataViewClick, onDataViewContext, onFocus, focusId, getColor, colorSeed, 
@@ -20,15 +22,19 @@ const TreeContent = React.createClass({
     const noFocus = focusId.now < 0;
     let isDead = false;
     
-    const parentCheck = (node)=> this.node && this.node.parentElement && this.node.parentElement.parentElement;
+    const parentCheck = (node)=> ((this.node !== undefined) && (this.node.parentNode !== undefined) && (this.node.parentNode.parentNode !== undefined));
+    
     
     const setFocus = function(){
       if( parentCheck() ){
-        //console.log(this.node.parentElement.parentElement);
-        this.node.parentElement.parentElement.parentElement.append(this.node.parentElement.parentElement);
+        //console.log(this.node.parentNode.parentNode);
+        //THIS BREAKS THE WHOLE THING IN IE BECAUSE IT THINKS THE MOUSE HAS LEFT THE <g> WHEN YOU MOVE IT SOMEWHERE ELSE IN THE DOM
+        if( !detectIE() ){  //TODO: Move this IE check outside and pass in as a prop
+          this.node.parentNode.parentNode.parentNode.appendChild(this.node.parentNode.parentNode);
+        }
         
         //add scale class
-        setTimeout( (()=> parentCheck() ? this.node.parentElement.parentElement.classList.add("tree-focus") : null).bind(this), 1);
+        setTimeout( (()=> parentCheck() ? addClass(this.node.parentNode.parentNode,"tree-focus") : null).bind(this), 1);
       }
       
       onFocus((index+1));
@@ -38,8 +44,8 @@ const TreeContent = React.createClass({
     
     const unFocus = function(){
       if( parentCheck() ){
-        //add scale class
-        setTimeout( (()=> parentCheck() ? (this.node.parentElement.parentElement.classList.remove("tree-focus")) : null).bind(this), 1);
+        //remove scale class
+        setTimeout( (()=> parentCheck() ? removeClass(this.node.parentNode.parentNode,"tree-focus") : null).bind(this), 1);
       }
       
       onFocus(-(index+1));
@@ -47,7 +53,7 @@ const TreeContent = React.createClass({
     
     return (
       <g
-        onMouseOver={depth === 1 ? setFocus.bind(this) : null}
+        onMouseEnter={depth === 1 ? setFocus.bind(this) : null}
         onMouseLeave={depth === 1 ? unFocus.bind(this) : null}
         onClick={onDataViewClick}
         onContextMenu={onDataViewContext}
@@ -59,13 +65,6 @@ const TreeContent = React.createClass({
               isFocus={focusId.now === root_.index }
               noFocus={noFocus}
               colors={getColor(index,root_[sizeRatioKey],colorSeed)}
-              {...this.props}
-            />
-          : (root_ != undefined && depth === 2 && (focusId.now === root_.index) || (focusId.prev === root_.index && noFocus)) ?
-          <DataRect2
-              haveFocus={focusId.now === root_.index}
-              wasFocus={focusId.prev === root_.index}
-              noFocus={focusId.now === -1}
               {...this.props}
             />
           : null
