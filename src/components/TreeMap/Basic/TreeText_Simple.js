@@ -36,8 +36,9 @@ const TreeText = React.createClass({
                 textAnchor="middle"
                 style={{
                   fill: clr,
-                  stroke: clr,
+                  stroke: 'none',
                   //strokeWidth: ss,
+                  fontWeight: 'bold',
                   pointerEvents: 'none',
                   userSelect: 'none',
                   transform: `translate3d(0px, ${ofs}px, 0px)`,
