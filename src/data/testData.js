@@ -48,6 +48,21 @@ const level1_1 = {
       yAlias: "size"
 };
 
+//computers
+const level2_0 = {
+      data: ComputerData,
+      primeEntity: "computer",
+      measures:  [
+          {n: "time", a: cast.sum, f: (s)=>f_t(s)},
+          {n: "users",a: cast.count, f: (s)=>f_i(s)+" users"},
+          {n: "emails",a: cast.sum, f: (s)=>f_i(s)+" emails sent"},
+          {n: "browsing",a: cast.sum, f: (s)=>f_t(s)+" browsing tinternet"},
+        ],
+      group: "room",
+      yField: "browsing",
+      yAlias: "size"
+};
+
 const data = 
       {
         0: level0, 
