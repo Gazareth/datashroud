@@ -49,7 +49,7 @@ const multiCast = function(d,g,t){
 };
 
 //This will take a treeData object and a field and generate size values using the field's values, but with a min cutoff
-export const reCast = function(tmO, minSize = minTreeBlockSize){
+export const reCast = function(tmO, minSize){
   //get the largest element, then we can do the alias for the tree map so there is no 'zero' boxes
   const mM = (d,f)=>f.apply(null,d.data.map((o)=>o[tmO.dK])); //min or max generator
   const dat = [mM(tmO,Math.min),mM(tmO,Math.max)];
@@ -103,4 +103,11 @@ export const castDataToTree = function(dsO, minSize = minLeafSizeRatio) {
     format: dsO.measures.find((e)=>e.n === dsO.yField).f};
 
   return reCast(tmO,minSize);
+};
+
+
+//This takes a session array and provides a dataset for google timeline chart
+//TODO: it should take a DSO and make a timeline array.
+export const castDataToTimeline = function(data) {
+  return data.map((e)=>[e.name, e.user+" ["+(Math.max(e.time,e.unTime)|| 1).toString()+"]", e.start, e.end]);
 };

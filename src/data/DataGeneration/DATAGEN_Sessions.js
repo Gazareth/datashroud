@@ -1,5 +1,5 @@
 import {rooms_, departments_, users_, computers_} from "./DATAGEN_Dimensions.js";
-import {ri_, ra_} from "../../utility/RNG.js";
+import {ri_, ra_} from "../../utility/RNG.js";  //ri_ = random integer; ra_ = randomly-split array
 import moment from 'moment';
 
 const timeFormat = 'YYYY-MM-DD HH:mm:ss'; //time format
@@ -37,8 +37,8 @@ class DailyComputerSessions{
     return ({
       startRaw: startTime,
       endRaw: startTime+duration,
-      start: startMom.format(timeFormat),
-      end: startMom.clone().add(duration,'s').format(timeFormat),
+      start: startMom.toDate(),
+      end: startMom.clone().add(duration,'s').toDate(),
       time: duration,
     });
   }
@@ -47,7 +47,7 @@ class DailyComputerSessions{
   MakeLoggedInSession(startTime, duration){
     
     const l = Math.random() > sessionBreakRatio ? 0 : 1;  //is someone actually logged in?
-    const u = l ? users_[ri_(users_.length)] : 0;
+    const u = l ? users_[ri_(users_.length)] : 0; //get a user
     
     //split into multiple sesions: work, browsing, browsing(for reasearch/productive)
     const ssd = ra_(duration,ri_(maxSessionVariety,4)).map((e)=>Math.round(e)); //subsession durations
@@ -78,20 +78,20 @@ class DailyComputerSessions{
     //the 'day' starts after the FIRST portion and ends at the 3rd
     const shiftLength = dq.slice(1,-1).reduce((a,c)=>a+c,0);  //how long is the computer switched on for?
     
-    const activityStart = timeOfDay(date,dq[0]);
-    const activityend = activityStart.clone().add(shiftLength,'s');
+    const activityStart = dq[0];
+    //const activityend = activityStart.clone().add(shiftLength,'s');
     
-    console.log(dq, dq.reduce((a,c)=>a+c,0));
+    console.log("DAYSPLIT: ",dq, "TOTALTIME: ",dq.reduce((a,c)=>a+c,0));
     //calculate number of sessions and then length of each
     const numSessions = ri_(maxSessionCount,4)+1;
     
     const sd = ra_(shiftLength,numSessions).map((e)=>Math.round(e)); //session durations
-    console.log(numSessions,sd);
+    console.log("NUMSESSIONS: ",numSessions, "SESSIONTIMES: ",sd);
     //make new array from session times where each element outlines the full session
-    const sessions = sd.map((e,i)=>this.MakeLoggedInSession(sd.slice(0,i+1).reduce((a,c)=>a+c,0),e));
+    const sessions = sd.map((e,i)=>this.MakeLoggedInSession(activityStart + sd.slice(0,i).reduce((a,c)=>a+c,0),e)).filter((e)=>e.unTime === 0);
     
-    console.log(sessions);
-    return JSON.stringify(sessions);
+    console.log("RESULT: ",sessions);
+    return (sessions);
   }
 }
 

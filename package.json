@@ -33,6 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@vx/text": "0.0.153",
+    "chartkick": "^2.3.3",
     "d3-ease": "^1.0.3",
     "human-duration": "^1.0.1",
     "melt-data": "^0.2.1",
@@ -42,6 +43,7 @@
     "react-animated-number": "^0.4.4",
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
+    "react-google-charts": "^1.5.5",
     "react-move": "^2.6.0",
     "react-radio-buttons": "^1.2.1",
     "react-redux": "^5.0.2",
