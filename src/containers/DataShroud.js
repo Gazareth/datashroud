@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { goDeeper, goShallower, focusSector } from '../actions';
-import Graphs from "../components/Graphs.js";
-
+import DataShroudPivot from "../components/DataShroudPivot.js";
 
 const mapStateToProps = (state, ownProps) => {
   return {
     dataSet: ownProps.dataSet,
-    dataLevel: state.dataState.level.now,
+    dLevel: state.dataState.level.now,  //data level
     //dataSet: getDataLevelData(state.dataLevel.level),
-    focusId: state.dataState.focus
+    focusId: state.dataState.focus,
+    colSeed: ownProps.colSeed
   };
 };
 
@@ -18,9 +18,9 @@ const mapDispatchToProps = {
     onFocus: focusSector
 };
 
-const GraphsController = connect(
+const DataShroud = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Graphs);
+)(DataShroudPivot);
 
-export default GraphsController;
+export default DataShroud;

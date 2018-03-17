@@ -5,9 +5,12 @@ import { easeLinear, easeExpOut  } from "d3-ease";
 const td = 350;//transition duration
 const md = 350;//maximum delay
 
+const swg = 0.18;  //stroke width gradient
+const swf_ = (x)=>Math.max(0.1,(9 - swg*x)); //stroke width function: x is number of rects
+
 const DataRect1 = React.createClass({
   render() {
-   const {isFocus,noFocus,x,y,width,height,colors,index,root} = this.props;
+   const {isFocus,noFocus,x,y,width,height,colors,numRects,index,root} = this.props;
 
     //const ad = Math.round(+(Math.random()*md))*; //actual delay
     const ad = (td/12)*(index+(Math.random()/2));
@@ -23,8 +26,10 @@ const DataRect1 = React.createClass({
     const fc = isFocus || noFocus ? colors[0] : '#777'; //fill color
     const sc = isFocus ? colors[1] : noFocus ? '#333' : '#666'; //stroke color
     //const fc = color;
-
-    const sw = isFocus ? 4 : noFocus ? 4.5 : 2; //stroke width
+    
+    const sw_ = swf_(numRects);
+    //console.log("SW_: ",sw_," NUMRECTS: ",numRects);
+    const sw = isFocus ? 1.1*sw_ : noFocus ? sw_ : sw_*0.45; //stroke width
     //const sf = '#fff';
     
     return(
@@ -71,8 +76,8 @@ const DataRect1 = React.createClass({
                   key={parseInt("1"+(index.toString()))}
                   x={x}
                   y={y}
-                  rx={isFocus ? 1 : 1.5}
-                  ry={isFocus ? 1 : 1.5}
+                  rx={isFocus ? 3 : 2}
+                  ry={isFocus ? 3 : 2}
                   width={width}
                   height={height}
                   style={{
@@ -83,7 +88,6 @@ const DataRect1 = React.createClass({
                     transformOrigin: "center",
                     transformBox: "fill-box",
                     transform: `scale(${scale}) translateZ(300px)`,
-                    borderRadius: '10px',
                     transformStyle: 'preserve-3d'
                   }}
                   >

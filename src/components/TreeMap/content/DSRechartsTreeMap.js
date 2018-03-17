@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ResponsiveContainer, Treemap } from 'recharts';
-import TreeContent from "./TreeCustomContent.js";
-import getColor from "../../utility/ColorGenerator.js";
-import getDepth from "../../utility/GetDepth.js";
+import TreeContent from "./DSRTMCustomContent.js";
+import getColor from "../../../utility/ColorGenerator.js";
+import getDepth from "../../../utility/GetDepth.js";
 
 const sizeKey = "size";
 const dataKey = "time";
 
 
 
-const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataSet, colSeed, canMouse, isDead}) => (
+const DSRechartsTreeMap = ({dataSet, onDataViewClick, onDataViewContext, onFocus, focusId, colSeed, canMouse, isDead}) => (
   <ResponsiveContainer
       height={"100%"}
       aspect={16/9}
@@ -40,7 +40,7 @@ const TreeCustom = ({onDataViewClick, onDataViewContext, onFocus, focusId, dataS
     </ResponsiveContainer>
 );
 
-TreeCustom.propTypes = {
+DSRechartsTreeMap.propTypes = {
   onDataViewClick: PropTypes.func.isRequired,
   onDataViewContext: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,
@@ -48,4 +48,4 @@ TreeCustom.propTypes = {
   dataSet: PropTypes.object.isRequired
 };
 
-export default TreeCustom;
+export default DSRechartsTreeMap;

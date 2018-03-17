@@ -1,15 +1,13 @@
 import React from "react";
-import GraphsController from "./GraphsController";
+import DataShroud from "./DataShroud";
 //import DataOrientationController from "./DataOrientationController";
 
+import DataShroudTimeline from "../components/Timeline/DataShroudTimeline.js";
+
 import data_c_u from "../data/data_computers_users.js";
+import data_s from '../data/data_sessions.js';
 
-import sessions from '../data/DataGeneration/DATAGEN_Sessions.js';
-import {castDataToTimeline} from '../utility/DataCasting';  //TODO: the casting should happen as you enter data into graph component, which shouldn't be here
-
-import { Chart } from 'react-google-charts';
-//<GraphsController
-//          dataSet={data}/>
+const colSeed = Math.random();  //COLOR SEED: picks a region of hue for the graph elements to have colours spread around
 
 // Home page component
 export default class Home extends React.Component {
@@ -19,25 +17,19 @@ export default class Home extends React.Component {
       <div className="page-home">
         <h4>Rooms</h4>
         
-        <GraphsController
-          dataSet={data_c_u}/>
+        <DataShroud
+          colSeed={colSeed}
+          dataSet={data_c_u}
+          />
         
-        <div>{JSON.stringify(sessions)}</div>
+        <div><br/><br/><br/><br/><br/>{/*JSON.stringify(Sessions)*/}</div>
         
-        <Chart chartType="Timeline"
-            columns={[{ type: 'string', label: 'Computer' },{ type: 'string', label: 'Duration' },{ type: 'date', label: 'Start' },{ type: 'date', label: 'End' }]}
-            rows={castDataToTimeline(sessions)}
-            graph_id={'timeline1'}
-            width="100%"
-            height="800px"
-            legend_toggle
-            options={{
-              hAxis: {    
-                minValue: new Date("17 Feb 2018 00:00:00 GMT"),
-                maxValue: new Date("17 Feb 2018 23:59:59 GMT")
-              }
-            }}
-            chartPackages={["corechart", "timeline"]} />;
+        
+        {<DataShroudTimeline
+          dataSet={data_s}
+          />}
+        
+        
         
         <button>
           Activate Lasers

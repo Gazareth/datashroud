@@ -1,9 +1,9 @@
 import React from "react";
-import DataRect1 from "./Basic/DataRect1.js";
-import DataRect2 from "./Basic/DataRect2.js";
-import TreeText from "./Basic/TreeText_Simple.js";
+import DataRect1 from "./basic/DataRect1.js";
+//import DataRect2 from "./basic/DataRect2.js";
+import TreeText from "./basic/TreeText_Simple.js";
 
-import {hasClass, addClass, removeClass, detectIE} from "../../utility/ClassManipulation.js";
+import {exists, hasClass, addClass, removeClass, detectIE} from "../../../utility/CompatibilityFunctions.js";
 
 const TreeContent = React.createClass({
   render() {
@@ -12,8 +12,8 @@ const TreeContent = React.createClass({
 
     const root_ = dataDepth === 1 ? root.children[index] : depth > 1 ? root : root.children[index];
     //if( depth === 2 ) console.log(root_, index, index == focusId.now);
-    const numChilds = root_.children !== undefined && root_.children !== null ? root_.children.length : 0;
-
+    const numChilds = exists(root.children) ? root.children.length : 0;
+    
     //const fsf = Math.pow(Math.pow(root_.width,2) + Math.pow(root_.height,2), 0.5)/20; //font size factor
     const hsf = Math.pow(Math.pow(root_.width,2) + Math.pow(root_.height,1.5), 0.15)/6; //HorizontalSizeFactor: corrupted pythag
     const vsf = Math.pow(Math.pow(root_.width,1.25) + Math.pow(root_.height,2), 0.15); //HorizontalSizeFactor: corrupted pythag
@@ -22,7 +22,7 @@ const TreeContent = React.createClass({
     const noFocus = focusId.now < 0;
     let isDead = false;
     
-    const parentCheck = (node)=> ((this.node !== undefined) && (this.node.parentNode !== undefined) && (this.node.parentNode.parentNode !== undefined));
+    const parentCheck = (node)=> ((exists(this.node)) && exists(this.node.parentNode) && exists(this.node.parentNode.parentNode));
     
     
     const setFocus = function(){
@@ -65,6 +65,7 @@ const TreeContent = React.createClass({
               isFocus={focusId.now === root_.index }
               noFocus={noFocus}
               colors={getColor(index,root_[sizeRatioKey],colorSeed)}
+              numRects={numChilds}
               {...this.props}
             />
           : null

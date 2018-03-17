@@ -1,4 +1,11 @@
-    /**
+/**
+  * Method that checks whether something exists.
+**/
+export function exists(x) {
+  return (x !== undefined) && (x !== null);
+}
+
+/**
  * Method that checks whether cls is present in element object.
  * @param  {Object} ele DOM element which needs to be checked
  * @param  {Object} cls Classname is tested
