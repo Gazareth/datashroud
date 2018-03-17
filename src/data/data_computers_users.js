@@ -1,4 +1,5 @@
 import {ComputerData, UserData, TypeCounts} from "./DataGeneration/DATAGEN_Computers_Users.js";
+import {sumCast, countCast} from '../utility/DataCasting';
 import numeral from "numeral";
 const duration = require('human-duration');
 
@@ -11,7 +12,7 @@ const level0 =
     data: TypeCounts,
     primeEntities: {0: "Computers", 1: "Users"},
     measures:  [
-        {n: "count",a: cast.sum, f: (s)=>f_i(s)},
+        {n: "count",a: sumCast, f: (s)=>f_i(s)},
       ],
     group: "type",
     yField: "count",
@@ -23,10 +24,10 @@ const level1_0 = {
       data: ComputerData,
       primeEntity: "computer",
       measures:  [
-          {n: "time", a: cast.sum, f: (s)=>f_t(s)},
-          {n: "users",a: cast.count, f: (s)=>f_i(s)+" users"},
-          {n: "emails",a: cast.sum, f: (s)=>f_i(s)+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>f_t(s)+" browsing tinternet"},
+          {n: "time", a: sumCast, f: (s)=>f_t(s)},
+          {n: "users",a: countCast, f: (s)=>f_i(s)+" users"},
+          {n: "emails",a: sumCast, f: (s)=>f_i(s)+" emails sent"},
+          {n: "browsing",a: sumCast, f: (s)=>f_t(s)+" browsing tinternet"},
         ],
       group: "room",
       yField: "browsing",
@@ -38,10 +39,10 @@ const level1_1 = {
       data: UserData,
       primeEntity: "computer",
       measures:  [
-          {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))},
-          {n: "computers",a: cast.count, f: (s)=>numeral(s).format('0,0')+" computers"},
-          {n: "emails",a: cast.sum, f: (s)=>numeral(s).format('0,0')+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))+" browsing tinternet"},
+          {n: "time", a: sumCast, f: (s)=>duration.fmt(1000 * parseInt(s))},
+          {n: "computers",a: countCast, f: (s)=>numeral(s).format('0,0')+" computers"},
+          {n: "emails",a: sumCast, f: (s)=>numeral(s).format('0,0')+" emails sent"},
+          {n: "browsing",a: sumCast, f: (s)=>duration.fmt(1000 * parseInt(s))+" browsing tinternet"},
         ],
       group: "room",
       yField: "browsing",
@@ -53,10 +54,10 @@ const level2_0 = {
       data: ComputerData,
       primeEntity: "computer",
       measures:  [
-          {n: "time", a: cast.sum, f: (s)=>f_t(s)},
-          {n: "users",a: cast.count, f: (s)=>f_i(s)+" users"},
-          {n: "emails",a: cast.sum, f: (s)=>f_i(s)+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>f_t(s)+" browsing tinternet"},
+          {n: "time", a: sumCast, f: (s)=>f_t(s)},
+          {n: "users",a: countCast, f: (s)=>f_i(s)+" users"},
+          {n: "emails",a: sumCast, f: (s)=>f_i(s)+" emails sent"},
+          {n: "browsing",a: sumCast, f: (s)=>f_t(s)+" browsing tinternet"},
         ],
       group: "room",
       yField: "browsing",

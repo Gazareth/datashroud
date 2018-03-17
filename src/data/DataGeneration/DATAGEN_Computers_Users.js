@@ -37,7 +37,7 @@ const generateDayta = function(mode = 0,days=0){
         const t = w ? ri_(timeMax) : 0;  //time worked on this computer
         
         dayData.push({
-          type: "Computers",
+          type: "computer",
           computer: computers_[j],
           room: rooms_[ri_(roomMax)],
           users: u,
@@ -51,7 +51,7 @@ const generateDayta = function(mode = 0,days=0){
         const t = w ? ri_(timeMax) : 0;  //time worked on computers by this user on this day
         
         dayData.push({
-          type: "Users",
+          type: "user",
           user: users_[j],
           department: departments_[ri_(deptMax)],
           computers: w ? 1+ri_(compPerUserDay,3) : 0,

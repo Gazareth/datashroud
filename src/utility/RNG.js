@@ -21,3 +21,6 @@ export const ra_ = (N,k)=> {
   
   //console.log(C);
 };
+
+//picks a random element from an array, with optional exponential curve (uses ri_)
+export const rp_ = (A,e=1)=>A[ri_(A.length-1,e)];

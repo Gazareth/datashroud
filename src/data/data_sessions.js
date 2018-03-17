@@ -1,73 +1,65 @@
-import {ComputerData, UserData, TypeCounts} from "./DataGeneration/DATAGEN_Computers_Users.js";
-import numeral from "numeral";
-const duration = require('human-duration');
+import {Sessions} from "./DataGeneration/DATAGEN_Sessions.js";
+import DSO from "./DataShroud/DataShroudO.js";
 
-//FORMATTING; s - string
-const f_t = (s)=>duration.fmt(1000 * parseInt(s)); //TIME
-const f_i = (s)=>numeral(s).format('0,0'); //INTEGER
+import DSA from "./DataShroud/DataShroudAggregation.js";
 
-const level0 =
-  {
-    data: TypeCounts,
-    primeEntities: {0: "Computers", 1: "Users"},
-    measures:  [
-        {n: "count",a: cast.sum, f: (s)=>f_i(s)},
-      ],
-    group: "type",
-    yField: "count",
-    yAlias: "size"
-  };
+//This contains the raw data with all available metrics/measures
+const DS_Data = (new DSO(Sessions))
+//parameters
+    .parameter("computer","string","Computers")             //0
+    .parameter("user", "string", "Users")                   //1
+    .parameter("time", "duration","Time")                   //2
+    .parameter("session", "object","Sessions")              //3
+//statistics
+    .statistic("typeCount",[0,1],"countDistinct")           //0
+    .statistic("timeTtl",[2],"sum","Total Time")            //1
+    .statistic("timeAvg",[2],"avg","Average Time")          //3
+    .statistic("sessionTtl",[3],"sum","Total Sessions")     //4
+    .statistic("sessionAvg",[3],"sum","Average Sessions")   //5
+//groups
+    .group({
+      name: "session",
+      statistics: [1,2],
+      subgroups: [
+        {
+          name: "computer",
+          statistics: [1,2,3],
+          subgroups: [
+            {
+              name:"room",
+              statistics: [1,2,3]
+            }
+          ]
+        },
+        {
+          name: "user",
+          statistics: [0,2,3],
+          subgroups: [
+            {
+              name: "department",
+              statistics: [0,2,3]
+            }
+          ]
+        }
+      ]
+    })
+    .Output();
 
-//computers
-const level1_0 = {
-      data: ComputerData,
-      primeEntity: "computer",
-      measures:  [
-          {n: "time", a: cast.sum, f: (s)=>f_t(s)},
-          {n: "users",a: cast.count, f: (s)=>f_i(s)+" users"},
-          {n: "emails",a: cast.sum, f: (s)=>f_i(s)+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>f_t(s)+" browsing tinternet"},
-        ],
-      group: "room",
-      yField: "browsing",
-      yAlias: "size"
-};
+console.log("SESSIONS!",Sessions);
+console.log("DS_OBJ",DS_Data);
+//console.log(JSON.stringify(level__.groups));
 
-//users
-const level1_1 = {
-      data: UserData,
-      primeEntity: "computer",
-      measures:  [
-          {n: "time", a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))},
-          {n: "computers",a: cast.count, f: (s)=>numeral(s).format('0,0')+" computers"},
-          {n: "emails",a: cast.sum, f: (s)=>numeral(s).format('0,0')+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>duration.fmt(1000 * parseInt(s))+" browsing tinternet"},
-        ],
-      group: "room",
-      yField: "browsing",
-      yAlias: "size"
-};
+//console.log(DSA.sum(DS_Data.data,["user"],"time"));
 
-//computers
-const level2_0 = {
-      data: ComputerData,
-      primeEntity: "computer",
-      measures:  [
-          {n: "time", a: cast.sum, f: (s)=>f_t(s)},
-          {n: "users",a: cast.count, f: (s)=>f_i(s)+" users"},
-          {n: "emails",a: cast.sum, f: (s)=>f_i(s)+" emails sent"},
-          {n: "browsing",a: cast.sum, f: (s)=>f_t(s)+" browsing tinternet"},
-        ],
-      group: "room",
-      yField: "browsing",
-      yAlias: "size"
-};
+//console.log(DSA.aggregate(DS_Data.data,["user"],"time"));
 
-const data = 
+const data = DS_Data;
+/*
       {
         0: level0, 
         1: level1_0
       }
       ;
+*/
 
 export default data;
