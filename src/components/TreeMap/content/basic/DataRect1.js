@@ -32,6 +32,8 @@ const DataRect1 = React.createClass({
     const sw = isFocus ? 1.1*sw_ : noFocus ? sw_ : sw_*0.45; //stroke width
     //const sf = '#fff';
     
+    const rr = isFocus ? 1.5 : 2; //rect corner radius
+    
     return(
         <Animate
           show={true}
@@ -76,8 +78,8 @@ const DataRect1 = React.createClass({
                   key={parseInt("1"+(index.toString()))}
                   x={x}
                   y={y}
-                  rx={isFocus ? 3 : 2}
-                  ry={isFocus ? 3 : 2}
+                  rx={rr}
+                  ry={rr}
                   width={width}
                   height={height}
                   style={{
