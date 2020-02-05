@@ -13,9 +13,10 @@ const colSeed = Math.random();  //COLOR SEED: picks a region of hue for the grap
 export default class Home extends React.Component {
   // render
   render() {
+	  var headerStyle = {fontWeight: 'bold'};
     return (
       <div className="page-home">
-        <h4>Rooms</h4>
+        <h4 style={headerStyle}>Usage TreeMap:</h4>
         
         <DataShroud
           colSeed={colSeed}
@@ -24,7 +25,8 @@ export default class Home extends React.Component {
         
         <div><br/><br/><br/><br/><br/>{/*JSON.stringify(Sessions)*/}</div>
         
-        
+        <h4 style={headerStyle}>Usage Timeline:</h4>
+			
         {<DataShroudTimeline
           dataSet={data_s}
           />}
