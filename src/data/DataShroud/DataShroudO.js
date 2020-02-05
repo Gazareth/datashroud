@@ -1,9 +1,11 @@
 import {exists} from "../../utility/CompatibilityFunctions.js";
+import {Amalgamate,Pick,FilterFrom,FilterOut} from "../../utility/Arrays.js";
+import DSC from "./DataShroudCasting.js";
 // -- DATASHROUD OBJECT -- ############################################################
 //
 //    a dsO is comprised of:
 //    :: data - raw data to be grouped and aggregated up
-//    :: parameters - variables available through the raw data
+//    :: parameters - list of all fields/variables available through the raw data
 //      :: {
 //          n: "computer",        //(name)
 //          t: "string"           //(type)
@@ -16,49 +18,25 @@ import {exists} from "../../utility/CompatibilityFunctions.js";
 //          f: "countDistinct"    //(function) -- certain strings can be parsed (e.g. sum, avg, count...)
 //          a: "Computer",        //(alias) -- optional. alias can come from parameters in some instances
 //        }
-//    :: groups - hierarchical structure of available groupings for the data
-//        in this example we have two routes to go down because the data can be framed around computers or users,
-//        and they each have their own group types
+//    :: groups - separate groups joined by the 'g' key
+//        if a group is deployed whilst its 'g' is also deployed, it is ignored
 //        {
-//          n: "session",
-//          s: [0,1,2],
-//          g: {
-//            0: {
-//              n: "computer",
-//              s: [1,2,3],
-//              g: {
-//                0: {
-//                  n: "room",
-//                  s: [1,2,3],
-//                }
-//              }
-//            },
-//            1: {
-//              n: "user",
-//              s: [0,2,3],
-//              g: {
-//                0: {
-//                  n: "department",
-//                  s: [1,2,3]
-//                },
-//              }
-//            }
-//          }
+//          n: "session",         //(name)
+//          s: [1,2]              //(statistics that can be aggregated with this group)
+//          g: []
 //        }
 // ########################################################
 
-//utility
-const resolveGroups = (go)=> exists(go) && exists(go.reduce) ? go.reduce((a,c)=> [...a, ({n: c.name, s: c.statistics, g: resolveGroups(c.subgroups)})],[]) : [];
 
-
-//DataShroud class - used to build datashroud objects
+//DataShroud class - can be used to build up or manipulate the datashroud object
 class DataShroud {
-  constructor(data={},parameters=[],statistics=[],groups={}){
+  constructor(data=[],parameters=[],statistics=[],groups=[],cast={}){
     this.o = {
       data,
       parameters,
       statistics,
-      groups
+      groups,
+      cast
     };
     
     return this;
@@ -66,25 +44,38 @@ class DataShroud {
   
   //Create components via functions
   //
+  // [ PARAMETER ]
+  // n - name
+  // t - type (this helps format the data in the end)
+  // a - alias
   parameter(n,t,a){
     this.o.parameters.push({n,t,a});
     return this;
   }
   //
+  // [ STATISTIC ]
+  // n - name
+  // p - parameters
+  // f - aggregation function name
+  // a - alias
   statistic(n,p,f,a=false){
     this.o.statistics.push(a ? {n,p,f,a} : {n,p,f});
     return this;
   }
   //
-  group(g){
-    this.o.groups = {
-      n: g.name,
-      s: g.statistics,
-      g: resolveGroups(g.subgroups)
-    };
+  //[ GROUP ]
+  //  n - name
+  //  s - statistics
+  //  g - superceding group (refers to other groups that nullify this one due to having a finer granularity)
+  group(n,s,g=[]){
+    this.o.groups.push({n,s,g});
     return this;
   }
   //
+  // [ CAST ]
+  //  g - groupings
+  //  s - stats
+  
   //############
   
   //Set whole components at once by passing the full object in
@@ -115,6 +106,29 @@ class DataShroud {
   //
   //############
   
+  
+  //Sets a cast on the data
+  //cast - {g: [0,1], s: [2,3]} - grouping and statistic indices
+  Cast(g=[],s=[]){
+    if(g.length+s.length === 0) return this.o.cast;
+    
+    //set the cast
+    let c_ = {g, s};
+
+    //FIX CAST (make sure no unavailable groups/stats are in the cast)
+    //groups are unavailable if you have also chosen a group with a finer granularity
+    c_.g = FilterOut(c_.g,this.o.groups,"g");
+    c_.s = FilterFrom(c_.s,Amalgamate(Pick(c_.g,this.o.groups),"s"),true);
+    
+    return this.SetComponent("cast",c_);
+  }
+  
+  //Returns data through the currently set cast
+  CastData(g=[],s=[]){
+    //set current cast
+    this.Cast(g,s);
+    return DSC.applyCast(this.o);
+  }
   
   //Return the current DSO
   Output(){

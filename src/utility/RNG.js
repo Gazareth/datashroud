@@ -23,4 +23,13 @@ export const ra_ = (N,k)=> {
 };
 
 //picks a random element from an array, with optional exponential curve (uses ri_)
-export const rp_ = (A,e=1)=>A[ri_(A.length-1,e)];
+//A - array
+//b - beginRatio (if slicing)
+//e - endRatio (if slicing)
+//ex - exponent (if you want randomness to be weighted)
+export const rp_ = (A,b=0,e=1,ex=1)=>{
+  const Ai = (x)=>Math.round(x*(A.length-1)); //get index of A from a ratio of how far along
+  const a = A.slice(Ai(b),Ai(e));
+  
+  return a[ri_(a.length-1,ex)];
+};

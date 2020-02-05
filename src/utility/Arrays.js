@@ -2,7 +2,10 @@ import {exists} from "./CompatibilityFunctions.js";
 
 //Amalgamate
 //takes an array of objects and creates an array of all of the p values in the array
-export const Amalgamate = (A,p)=>(A.reduce((a,c)=> [...a, ...(exists(c[p]) ? c[p] : [])] , []));
+//A - array of objects with property p
+//p - property to build array from
+//pa - is p an array? if not push the whole of p to the array as one value
+export const Amalgamate = (A,p,pa=true)=>(A.reduce((a,c)=> [...a, ...(exists(c[p]) ? (pa ? c[p] : [c[p]]) : [])] , []));
 
 //Map
 //Takes an array of indexes and another array, building a third array by picking the indexes contained within the first array FROM the second
@@ -18,5 +21,5 @@ export const FilterFrom = (a1,a2,c=true)=> (a1.filter ((a1v)=> c === (a2.indexOf
 //a1 - objects that have property p which is an array of values
 //a2 - values a1 should not have any of
 export const FilterOut = (a1,a2,p)=> (
-  a1.filter((a1v)=> (FilterFrom(a2[a1v][p],a1).length === 0) )
+  a1.filter((a1v)=> (FilterFrom(a2[a1v][p],a1).length === 0))
 );

@@ -135,7 +135,6 @@ class DailyComputerSessions{
     //!!!
     
     return ({
-      type: "computer",
       computer: this._computer.computer,
       room: this._computer.room,
       user: usr,
@@ -178,8 +177,6 @@ const DCS = [
   ...((new DailyComputerSessions(GetComputer())).data), 
   ...((new DailyComputerSessions(GetComputer())).data)
 ];
-
-console.log("DCS IS : ",DCS);
 
 //const sesions = DCS.GenerateSessions();
 export const Sessions = DCS;//;.GenerateSesions();

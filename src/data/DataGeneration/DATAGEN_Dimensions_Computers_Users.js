@@ -5,4 +5,4 @@ const computers = computers_.map((e,i)=> ({computer: e, room: rp_(rooms_)}));
 const users = users_.map((e,i)=> ({user: e, department: rp_(departments_)}));
 
 export const GetComputer = ()=> rp_(computers);
-export const GetUser = ()=> rp_(users);
+export const GetUser = ()=> rp_(users,0,0.1);
