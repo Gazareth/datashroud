@@ -1,3 +1,11 @@
+# Datashroud
+  A React-based dashboard example using an interactive animated treemap for navigation & display, along with a simple timeline
+  
+  ![](demogif.gif)
+
+
+Built from redux minimal starter kit
+
 # React Redux minimal starter kit (boilerplate)
 
 
