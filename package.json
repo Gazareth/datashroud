@@ -37,7 +37,7 @@
     "d3-ease": "^1.0.6",
     "human-duration": "^1.0.1",
     "melt-data": "^0.2.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "numeral": "^2.0.6",
     "react": "^15.4.2",
     "react-animated-number": "^0.4.4",
